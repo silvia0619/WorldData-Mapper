@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 const Logo = (props) => {
     let history = useHistory();
     const handleLogo = async (e) => {
-        history.replace("/welcome");
+        history.replace("/select-map");
     }
 
     return (

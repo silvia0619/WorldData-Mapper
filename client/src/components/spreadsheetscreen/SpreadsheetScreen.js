@@ -111,7 +111,7 @@ const Spreadsheetscreen = (props) => {
 					</ul>
 					<ul>
 						<NavbarOptions
-							fetchUser={props.fetchUser} auth={auth}
+							fetchUser={props.fetchUser} auth={auth} user={props.user}
 							setShowCreate={setShowCreate} setShowLogin={setShowLogin} 
 							setShowUpdate={setShowUpdate}
 						/>
@@ -120,8 +120,8 @@ const Spreadsheetscreen = (props) => {
 			</WLHeader>
 
 			<WLMain w="30">
-                {/* <SelectMapContents auth={auth} listIDs={RegionTableData} createNewRegion={createNewRegion} 
-									updateRegionField={updateRegionField} deleteRegion={deleteRegion}/> */}
+                <SpreadsheetContents auth={auth} listIDs={RegionTableData} createNewRegion={createNewRegion} 
+									updateRegionField={updateRegionField} deleteRegion={deleteRegion}/>
 				<WButton onClick={createNewRegion}>createNewRegion</WButton>
 			</WLMain>
 

@@ -1,15 +1,15 @@
-// import React            from 'react';
-// import SpreadsheetTableContents    from './SpreadsheetTableContents';
+import React            from 'react';
+import SpreadsheetTableContents    from './SpreadsheetTableContents';
 
-// const SpreadsheetContents = (props) => {
-//     return (
-//         <>
-//             <SpreadsheetTableContents
-//                 listIDs={props.listIDs} createNewRegion={props.createNewRegion} 
-//                 updateRegionField={props.updateRegionField} deleteRegion={props.deleteRegion}
-//             />
-//         </>
-//     );
-// };
+const SpreadsheetContents = (props) => {
+    return (
+        <>
+            <SpreadsheetTableContents
+                listIDs={props.listIDs} createNewRegion={props.createNewRegion} 
+                updateRegionField={props.updateRegionField} deleteRegion={props.deleteRegion}
+            />
+        </>
+    );
+};
 
-// export default SpreadsheetContents;
+export default SpreadsheetContents;

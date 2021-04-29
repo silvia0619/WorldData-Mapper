@@ -44,7 +44,7 @@ const Welcomescreen = (props) => {
 					</ul>
 					<ul>
 						<NavbarOptions
-							fetchUser={props.fetchUser} auth={auth}
+							fetchUser={props.fetchUser} auth={auth} user={props.user}
 							setShowCreate={setShowCreate} setShowLogin={setShowLogin} setShowUpdate={setShowUpdate}
 						/>
 					</ul>
