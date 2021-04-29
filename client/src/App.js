@@ -5,7 +5,7 @@ import Spreadsheetscreen 		from './components/spreadsheetscreen/Spreadsheetscree
 import { useQuery } 	from '@apollo/client';
 import * as queries 	from './cache/queries';
 import { jsTPS } 		from './utils/jsTPS';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect, useParams } from 'react-router-dom';
  
 const App = () => {
 	let user = null;
@@ -45,9 +45,21 @@ const App = () => {
 					} 
 				/>
 				<Route/>
+				<Route path="/spreadsheet/:id" children={<Child />} />
 			</Switch>
 		</BrowserRouter>
 	);
 }
+function Child() {
+	// We can use the `useParams` hook here to access
+	// the dynamic pieces of the URL.
+	let { id } = useParams();
+  
+	return (
+	  <div>
+		<h3>ID: {id}</h3>
+	  </div>
+	);
+  }
 
 export default App;

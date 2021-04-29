@@ -1,8 +1,10 @@
 import React, { useState }  from 'react';
 import { WNavItem, WInput, WButton } from 'wt-frontend';
+import { Link } from "react-router-dom";
 
 const SelectMapTableEntry = (props) => {
     const [editing, toggleEditing] = useState(false);
+    const theId = "/spreadsheet/" + props._id;
 
     const handleEditing = (e) => {
         e.stopPropagation();
@@ -26,9 +28,7 @@ const SelectMapTableEntry = (props) => {
                                 onKeyDown={(e) => {if(e.keyCode === 13) handleSubmit(e)}}
                                 name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={props.name} 
                             />
-                        :   <div className='list-text'>
-                                {props.name}
-                            </div>
+                        :<li><Link to={theId}>{props.name}</Link></li>   
             }
            <WButton onClick={handleEditing}>edit</WButton>
            <WButton onClick={handleDeleting}>delete</WButton>
