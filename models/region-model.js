@@ -7,28 +7,23 @@ const regionSchema = new Schema(
             required: true
         },
         parentId: {
-            type: String,
-            required: true
+            type: String
         },
         name: {
             type: String,
             required: true
         },
         owner: {
-            type: String,
-            required: true
+            type: String
         },
         capital: {
-            type: String,
-            required: true
+            type: String
         },
         leader: {
-            type: String,
-            required: true
+            type: String
         },
 	    landmarks: {
-            type: [String],
-            required: true
+            type: [String]
         }
     }, { timestamps: true }
 );

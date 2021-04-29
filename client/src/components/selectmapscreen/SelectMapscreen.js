@@ -3,12 +3,13 @@ import Login 							from '../modals/Login';
 import Update 							from '../modals/Update';
 import CreateAccount 					from '../modals/CreateAccount';
 import NavbarOptions 					from '../navbar/NavbarOptions';
-import SelectMapContents 				from './SelectMapContent'
+import SelectMapContents 				from './SelectMapContents'
 import * as mutations 					from '../../cache/mutations';
+import { GET_DB_REGIONS } 				from '../../cache/queries';
 import React, { useState } 				from 'react';
 import { useMutation, useQuery } 		from '@apollo/client';
 import { WNavbar, WSidebar, WNavItem } 	from 'wt-frontend';
-import { WLayout, WLHeader, WLMain, WLSide, WRow, WCol, WCard, WCHeader } from 'wt-frontend';
+import { WLayout, WLHeader, WLMain, WButton } from 'wt-frontend';
 
 const SelectMapscreen = (props) => {
 
@@ -20,6 +21,61 @@ const SelectMapscreen = (props) => {
 	const [showCreate, toggleShowCreate] = useState(false);
 	const [showUpdate, toggleShowUpdate] = useState(false);
 
+	const { loading, error, data, refetch } = useQuery(GET_DB_REGIONS);
+
+	if(loading) { console.log(loading, 'loading'); }
+	if(error) { console.log(error, 'error'); }
+	if(data) { 
+		// Assign todolists 
+		for(let region of data.getAllRegions) {
+			if(region.parentId == "") {
+				regions.push(region)
+			}
+		}
+		// create data for sidebar links
+		for(let region of regions) {
+			if(region) {
+				RegionTableData.push({_id: region._id, name: region.name});
+			}	
+		}
+		refetch();
+	}
+
+	const mutationOptions = {
+		refetchQueries: [{ query: GET_DB_REGIONS }], 
+		awaitRefetchQueries: true,
+		onCompleted: () => refetch()
+	}
+
+	const [AddRegion] 			= useMutation(mutations.ADD_REGION, mutationOptions);
+	const [UpdateRegionField] 	= useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
+	const [DeleteRegion]		= useMutation(mutations.DELETE_REGION, mutationOptions);
+
+
+
+	const createNewRegion = async () => {
+		let newRegion = {
+			_id: '',
+        	parentId: '',
+			name: 'undefined',
+			owner: props.user._id,
+        	capital: '',
+			leader: '',
+        	landmarks: []
+		}
+		const { data } = await AddRegion({ variables: { region: newRegion }, refetchQueries: [{ query: GET_DB_REGIONS }] });
+		if(data) {
+			// loadTodoList(data.addTodolist);
+		} 	
+	};
+
+	const updateRegionField = async (_id, field, value) => {
+		const { data } = await UpdateRegionField({ variables: { _id: _id, field: field, value: value }});
+	};
+
+	const deleteRegion = async (_id) => {
+		DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
+	};
 
 	const setShowLogin = () => {
 		toggleShowCreate(false);
@@ -51,14 +107,17 @@ const SelectMapscreen = (props) => {
 					<ul>
 						<NavbarOptions
 							fetchUser={props.fetchUser} auth={auth}
-							setShowCreate={setShowCreate} setShowLogin={setShowLogin} setShowUpdate={setShowUpdate}
+							setShowCreate={setShowCreate} setShowLogin={setShowLogin} 
+							setShowUpdate={setShowUpdate}
 						/>
 					</ul>
 				</WNavbar>
 			</WLHeader>
 
 			<WLMain w="30">
-				
+				<SelectMapContents auth={auth} listIDs={RegionTableData} createNewRegion={createNewRegion} 
+									updateRegionField={updateRegionField} deleteRegion={deleteRegion}/>
+				<WButton onClick={createNewRegion}>createNew</WButton>
 			</WLMain>
 
 			{

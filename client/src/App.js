@@ -1,6 +1,7 @@
 import React 			from 'react';
 import Welcomescreen 		from './components/welcomescreen/Welcomescreen';
 import SelectMapscreen 		from './components/selectmapscreen/SelectMapscreen';
+import Spreadsheetscreen 		from './components/spreadsheetscreen/Spreadsheetscreen';
 import { useQuery } 	from '@apollo/client';
 import * as queries 	from './cache/queries';
 import { jsTPS } 		from './utils/jsTPS';
@@ -34,6 +35,13 @@ const App = () => {
 					name="select-map" 
 					render={() => 
 						<SelectMapscreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps}/>
+					} 
+				/>
+				<Route 
+					path="/spreadsheet" 
+					name="spreadsheet" 
+					render={() => 
+						<Spreadsheetscreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps}/>
 					} 
 				/>
 				<Route/>
