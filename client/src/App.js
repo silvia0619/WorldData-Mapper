@@ -1,7 +1,9 @@
-import React 			from 'react';
+import React 				from 'react';
 import Welcomescreen 		from './components/welcomescreen/Welcomescreen';
 import SelectMapscreen 		from './components/selectmapscreen/SelectMapscreen';
-import Spreadsheetscreen 		from './components/spreadsheetscreen/Spreadsheetscreen';
+import Spreadsheetscreen 	from './components/spreadsheetscreen/Spreadsheetscreen';
+import Viewerscreen 		from './components/viewerscreen/Viewerscreen';
+
 import { useQuery } 	from '@apollo/client';
 import * as queries 	from './cache/queries';
 import { jsTPS } 		from './utils/jsTPS';
@@ -44,8 +46,16 @@ const App = () => {
 						<Spreadsheetscreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps}/>
 					} 
 				/>
+				<Route 
+					path="/viewer" 
+					name="viewer" 
+					render={() => 
+						<Viewerscreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps}/>
+					} 
+				/>
 				<Route/>
 				<Route path="/spreadsheet/:id" children={<Child />} />
+				<Route path="/viewer/:id" children={<Child />} />
 			</Switch>
 		</BrowserRouter>
 	);

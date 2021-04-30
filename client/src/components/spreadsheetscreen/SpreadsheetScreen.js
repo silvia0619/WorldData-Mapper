@@ -40,7 +40,7 @@ const Spreadsheetscreen = (props) => {
 		// create data for sidebar links
 		for(let region of regions) {
 			if(region) {
-				RegionTableData.push({_id: region._id, name: region.name});
+				RegionTableData.push({_id: region._id, name: region.name, landmarks: region.landmarks});
 			}	
 		}
 		refetch();
@@ -66,7 +66,7 @@ const Spreadsheetscreen = (props) => {
 			owner: props.user._id,
         	capital: '',
 			leader: '',
-        	landmarks: []
+        	landmarks: ["Park", "Building"]
 		}
 		const { data } = await AddRegion({ variables: { region: newRegion }, refetchQueries: [{ query: GET_DB_REGIONS }] });
 		if(data) {
