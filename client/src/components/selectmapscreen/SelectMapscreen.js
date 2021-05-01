@@ -1,25 +1,15 @@
-import Logo 							from '../navbar/Logo';
-import Login 							from '../modals/Login';
-import Update 							from '../modals/Update';
-import CreateAccount 					from '../modals/CreateAccount';
-import NavbarOptions 					from '../navbar/NavbarOptions';
 import SelectMapContents 				from './SelectMapContents'
 import * as mutations 					from '../../cache/mutations';
 import { GET_DB_REGIONS } 				from '../../cache/queries';
 import React, { useState } 				from 'react';
 import { useMutation, useQuery } 		from '@apollo/client';
-import { WNavbar, WSidebar, WNavItem } 	from 'wt-frontend';
-import { WLayout, WLHeader, WLMain, WButton } from 'wt-frontend';
+import { WLayout, WLMain, WButton } from 'wt-frontend';
 
 const SelectMapscreen = (props) => {
 
 	const auth = props.user === null ? false : true;
 	let regions = [];
 	let RegionTableData = [];
-
-	const [showLogin, toggleShowLogin] = useState(false);
-	const [showCreate, toggleShowCreate] = useState(false);
-	const [showUpdate, toggleShowUpdate] = useState(false);
 
 	const { loading, error, data, refetch } = useQuery(GET_DB_REGIONS);
 
@@ -51,8 +41,6 @@ const SelectMapscreen = (props) => {
 	const [UpdateRegionField] 	= useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
 	const [DeleteRegion]		= useMutation(mutations.DELETE_REGION, mutationOptions);
 
-
-
 	const createNewRegion = async () => {
 		let newRegion = {
 			_id: '',
@@ -77,61 +65,14 @@ const SelectMapscreen = (props) => {
 		DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
 	};
 
-	const setShowLogin = () => {
-		toggleShowCreate(false);
-		toggleShowLogin(!showLogin);
-	};
-
-	const setShowCreate = () => {
-		toggleShowLogin(false);
-		toggleShowCreate(!showCreate);
-	};
-
-	const setShowUpdate = () => {
-		toggleShowLogin(false);
-		toggleShowCreate(false);
-		toggleShowUpdate(!showUpdate);
-	};
-
-
 
 	return (
 		<WLayout wLayout="header-lside-rside">
-			<WLHeader>
-				<WNavbar color="colored">
-					<ul>
-						<WNavItem>
-							<Logo className='logo' />
-						</WNavItem>
-					</ul>
-					<ul>
-						<NavbarOptions
-							fetchUser={props.fetchUser} auth={auth} user={props.user}
-							setShowCreate={setShowCreate} setShowLogin={setShowLogin} 
-							setShowUpdate={setShowUpdate}
-						/>
-					</ul>
-				</WNavbar>
-			</WLHeader>
-
 			<WLMain w="30">
 				<SelectMapContents auth={auth} listIDs={RegionTableData} createNewRegion={createNewRegion} 
 									updateRegionField={updateRegionField} deleteRegion={deleteRegion}/>
 				<WButton onClick={createNewRegion}>createNew</WButton>
 			</WLMain>
-
-			{
-				showCreate && (<CreateAccount fetchUser={props.fetchUser} setShowCreate={setShowCreate} />)
-			}
-
-			{
-				showLogin && (<Login fetchUser={props.fetchUser} setShowLogin={setShowLogin} />)
-			}
-
-			{
-				showUpdate && (<Update fetchUser={props.fetchUser} setShowUpdate={setShowUpdate} />)
-			}
-
 		</WLayout>
 	);
 };

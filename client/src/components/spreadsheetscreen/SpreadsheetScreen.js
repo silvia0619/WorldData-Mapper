@@ -21,11 +21,6 @@ const Spreadsheetscreen = (props) => {
     let pathname = useHistory().location.pathname;
     let theParentId = pathname.substring(13, pathname.length);
 
-
-	const [showLogin, toggleShowLogin] = useState(false);
-	const [showCreate, toggleShowCreate] = useState(false);
-	const [showUpdate, toggleShowUpdate] = useState(false);
-
 	const { loading, error, data, refetch } = useQuery(GET_DB_REGIONS);
 
 	if(loading) { console.log(loading, 'loading'); }
@@ -56,8 +51,6 @@ const Spreadsheetscreen = (props) => {
 	const [UpdateRegionField] 	= useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
 	const [DeleteRegion]		= useMutation(mutations.DELETE_REGION, mutationOptions);
 
-
-
 	const createNewRegion = async () => {
 		let newRegion = {
 			_id: '',
@@ -82,61 +75,14 @@ const Spreadsheetscreen = (props) => {
 		DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
 	};
 
-	const setShowLogin = () => {
-		toggleShowCreate(false);
-		toggleShowLogin(!showLogin);
-	};
-
-	const setShowCreate = () => {
-		toggleShowLogin(false);
-		toggleShowCreate(!showCreate);
-	};
-
-	const setShowUpdate = () => {
-		toggleShowLogin(false);
-		toggleShowCreate(false);
-		toggleShowUpdate(!showUpdate);
-	};
-
-
 
 	return (
 		<WLayout wLayout="header-lside-rside">
-			<WLHeader>
-				<WNavbar color="colored">
-					<ul>
-						<WNavItem>
-							<Logo className='logo' />
-						</WNavItem>
-					</ul>
-					<ul>
-						<NavbarOptions
-							fetchUser={props.fetchUser} auth={auth} user={props.user}
-							setShowCreate={setShowCreate} setShowLogin={setShowLogin} 
-							setShowUpdate={setShowUpdate}
-						/>
-					</ul>
-				</WNavbar>
-			</WLHeader>
-
 			<WLMain w="30">
                 <SpreadsheetContents auth={auth} listIDs={RegionTableData} createNewRegion={createNewRegion} 
 									updateRegionField={updateRegionField} deleteRegion={deleteRegion}/>
 				<WButton onClick={createNewRegion}>createNewRegion</WButton>
 			</WLMain>
-
-			{
-				showCreate && (<CreateAccount fetchUser={props.fetchUser} setShowCreate={setShowCreate} />)
-			}
-
-			{
-				showLogin && (<Login fetchUser={props.fetchUser} setShowLogin={setShowLogin} />)
-			}
-
-			{
-				showUpdate && (<Update fetchUser={props.fetchUser} setShowUpdate={setShowUpdate} />)
-			}
-
 		</WLayout>
 	);
 };
