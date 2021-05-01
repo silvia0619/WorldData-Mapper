@@ -252,3 +252,33 @@ html, body {
     color: white;
     text-align: center;
 }
+
+
+
+.map-table {
+    background-color: pink;
+    border-radius: 0px;
+    width: 370px;
+    height: 408px;
+}
+
+.map-header-red {
+    margin-top: 30px;
+    height: 10px;
+    background-color: #CB2F29;
+}
+
+.map-header-black {
+    color: white;
+    width: 740px;
+    height: 50px;
+    text-align: center;
+    background-color: black;
+}
+
+.create-map-button {
+    text-align: center;
+    width: 370px;
+    background-color: #971716;
+    color: white;
+}

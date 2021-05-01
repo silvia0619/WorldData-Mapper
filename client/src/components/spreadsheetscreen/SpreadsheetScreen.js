@@ -14,6 +14,7 @@ const SpreadsheetScreen = (props) => {
 	let RegionTableData = [];
     let pathname = useHistory().location.pathname;
     let theParentId = pathname.substring(13, pathname.length);
+	let selectedMapName = "";
 
 	const { loading, error, data, refetch } = useQuery(GET_DB_REGIONS);
 
@@ -25,11 +26,20 @@ const SpreadsheetScreen = (props) => {
 			if(region.parentId == theParentId) {
 				regions.push(region)
 			}
+			if(region._id == theParentId) {
+				selectedMapName = region.name;
+			}
 		}
 		// create data for sidebar links
 		for(let region of regions) {
 			if(region) {
-				RegionTableData.push({_id: region._id, name: region.name, landmarks: region.landmarks});
+				RegionTableData.push({
+					_id: region._id, 
+					name: region.name, 
+					capital: region.capital, 
+					leader: region.leader,
+					landmarks: region.landmarks
+				});
 			}	
 		}
 		refetch();
@@ -51,9 +61,9 @@ const SpreadsheetScreen = (props) => {
         	parentId: theParentId,
 			name: 'undefined',
 			owner: props.user._id,
-        	capital: '',
-			leader: '',
-        	landmarks: ["Park", "Building"]
+        	capital: 'capital',
+			leader: 'leader',
+        	landmarks: ["landmark"]
 		}
 		const { data } = await AddRegion({ variables: { region: newRegion }, refetchQueries: [{ query: GET_DB_REGIONS }] });
 		if(data) {
@@ -71,10 +81,10 @@ const SpreadsheetScreen = (props) => {
 
 
 	return (
-		<WLayout wLayout="header-lside-rside">
+		<WLayout wLayout="lside-rside">
 			<WLMain w="30">
-                <SpreadsheetContents auth={auth} listIDs={RegionTableData} createNewRegion={createNewRegion} 
-									updateRegionField={updateRegionField} deleteRegion={deleteRegion}/>
+                <SpreadsheetContents auth={auth} listIDs={RegionTableData} selectedMapName={selectedMapName}
+					createNewRegion={createNewRegion} updateRegionField={updateRegionField} deleteRegion={deleteRegion}/>
 				<WButton onClick={createNewRegion}>createNewRegion</WButton>
 			</WLMain>
 		</WLayout>

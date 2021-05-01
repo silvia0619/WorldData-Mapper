@@ -9,7 +9,8 @@ const SpreadsheetTableContents = (props) => {
                 props.listIDs &&
                 props.listIDs.map(entry => (
                     <SpreadsheetTableEntry
-                        id={tempID++} name={entry.name} _id={entry._id} landmarks={entry.landmarks}
+                        id={tempID++} name={entry.name} _id={entry._id} capital={entry.capital}
+                        leader={entry.leader} landmarks={entry.landmarks}
                         updateRegionField={props.updateRegionField} deleteRegion={props.deleteRegion}
                     />
                 ))

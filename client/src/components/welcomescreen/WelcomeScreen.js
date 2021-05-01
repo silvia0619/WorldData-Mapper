@@ -6,8 +6,9 @@ const WelcomeScreen = (props) => {
 	const auth = props.user === null ? false : true;
 
 	return (
-		<WLayout wLayout="header-lside-rside">
+		<WLayout wLayout="lside-rside">
 			<WLMain>
+				<div className="modal-spacer">&nbsp;</div>
 				<WRow>
 					<WCol size="3"></WCol>
 					<WCol size="5"><img className='welcome-img' src="https://dummyimage.com/400x400/000/fff"/></WCol>

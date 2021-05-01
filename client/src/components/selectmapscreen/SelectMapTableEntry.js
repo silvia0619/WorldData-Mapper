@@ -1,5 +1,5 @@
 import React, { useState }  from 'react';
-import { WNavItem, WInput, WButton } from 'wt-frontend';
+import { WRow, WCol, WInput, WButton } from 'wt-frontend';
 import { Link } from "react-router-dom";
 
 const SelectMapTableEntry = (props) => {
@@ -22,17 +22,19 @@ const SelectMapTableEntry = (props) => {
     };
 
     return (
-        <WNavItem>
-           {
-                editing ?   <WInput className="list-item-edit" inputClass="list-item-edit-input"
-                                onKeyDown={(e) => {if(e.keyCode === 13) handleSubmit(e)}}
-                                name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={props.name} 
-                            />
-                        :<li><Link to={theId}>{props.name}</Link></li>   
-            }
-           <WButton onClick={handleEditing}>edit</WButton>
-           <WButton onClick={handleDeleting}>delete</WButton>
-        </WNavItem>
+        <WRow>
+            <WCol size="10" style={{paddingLeft: 15 + 'px'}}>
+                {
+                    editing ?   <WInput className="list-item-edit" inputClass="list-item-edit-input"
+                                    onKeyDown={(e) => {if(e.keyCode === 13) handleSubmit(e)}}
+                                    name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={props.name} 
+                                />
+                            :<Link to={theId} style={{ textDecoration: 'none', color: 'black', fontSize: '25px'}}>{props.name}</Link>   
+                }
+            </WCol>
+            <WCol size="1"><WButton className="map-table-icons" onClick={handleEditing} wType="texted"><i class="fas fa-pen"></i></WButton></WCol>
+            <WCol size="1"><WButton className="map-table-icons" onClick={handleDeleting} wType="texted"><i class="fas fa-trash-alt"></i></WButton></WCol>
+        </WRow>
     );
 };
 

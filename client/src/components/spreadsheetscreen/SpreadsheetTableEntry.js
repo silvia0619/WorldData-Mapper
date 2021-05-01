@@ -1,5 +1,5 @@
 import React, { useState }  from 'react';
-import { WNavItem, WInput, WButton } from 'wt-frontend';
+import { WRow, WCol, WInput, WButton } from 'wt-frontend';
 import { Link } from "react-router-dom";
 
 const SpreadsheetTableEntry = (props) => {
@@ -23,17 +23,17 @@ const SpreadsheetTableEntry = (props) => {
     };
 
     return (
-        <WNavItem>
-           {
-                editing ?   <WInput className="list-item-edit" inputClass="list-item-edit-input"
-                                onKeyDown={(e) => {if(e.keyCode === 13) handleSubmit(e)}}
-                                name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={props.name} 
-                            />
-                        :<li><Link to={theId}>{props.name}</Link><Link to={selectedRegionId}>{props.landmarks}</Link></li>   
-            }
-           <WButton onClick={handleEditing}>edit</WButton>
-           <WButton onClick={handleDeleting}>delete</WButton>
-        </WNavItem>
+        <WRow style={{border: '1px solid black'}}>
+            <WCol size="1"><WButton className="remove-region-icon" onClick={handleDeleting} wType="texted">
+                <i class="fas fa-times"></i></WButton></WCol>
+            <WCol size="2" style={{border: '1px solid black', textDecoration: 'none', color: 'black'}}>
+                <Link to={theId}>{props.name}</Link></WCol>
+            <WCol size="2" style={{border: '1px solid black'}}>{props.capital}</WCol>
+            <WCol size="2" style={{border: '1px solid black'}}>{props.leader}</WCol>
+            <WCol size="2" style={{border: '1px solid black'}}><img className='welcome-img' src="https://dummyimage.com/40x30/000/fff"/></WCol>
+            <WCol size="3" style={{border: '1px solid black', textDecoration: 'none', color: 'black'}}>
+                <Link to={selectedRegionId}>{props.landmarks}</Link></WCol>
+        </WRow>
     );
 };
 

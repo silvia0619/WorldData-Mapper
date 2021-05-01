@@ -48,7 +48,7 @@ const ViewerScreen = (props) => {
 
 
 	return (
-		<WLayout wLayout="header-lside-rside">
+		<WLayout wLayout="lside-rside">
 			<WLMain w="30">
 				<li><Link to={"/spreadsheet/" + regions[0].parentId}>{regions[0].name}</Link></li>
 			</WLMain>
