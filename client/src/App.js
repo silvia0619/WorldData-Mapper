@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Welcomescreen from './components/welcomescreen/Welcomescreen';
-import SelectMapscreen from './components/selectmapscreen/SelectMapscreen';
-import Spreadsheetscreen from './components/spreadsheetscreen/Spreadsheetscreen';
-import Viewerscreen from './components/viewerscreen/Viewerscreen';
+import WelcomeScreen from './components/welcomescreen/WelcomeScreen';
+import SelectMapScreen from './components/selectmapscreen/SelectMapScreen';
+import SpreadsheetScreen from './components/spreadsheetscreen/SpreadsheetScreen';
+import ViewerScreen from './components/viewerscreen/ViewerScreen';
 import NavbarOptions from './components/navbar/NavbarOptions';
 import Logo from './components/navbar/Logo';
 import Login from './components/modals/Login';
@@ -72,28 +72,28 @@ const App = () => {
 						path="/welcome"
 						name="welcome"
 						render={() =>
-							<Welcomescreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
+							<WelcomeScreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
 						}
 					/>
 					<Route
 						path="/select-map"
 						name="select-map"
 						render={() =>
-							<SelectMapscreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
+							<SelectMapScreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
 						}
 					/>
 					<Route
 						path="/spreadsheet"
 						name="spreadsheet"
 						render={() =>
-							<Spreadsheetscreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
+							<SpreadsheetScreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
 						}
 					/>
 					<Route
 						path="/viewer"
 						name="viewer"
 						render={() =>
-							<Viewerscreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
+							<ViewerScreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
 						}
 					/>
 					<Route />

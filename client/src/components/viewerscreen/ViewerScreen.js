@@ -6,7 +6,7 @@ import { WLayout, WLMain, WButton } from 'wt-frontend';
 
 import { useHistory, Link } from 'react-router-dom';
 
-const Viewerscreen = (props) => {
+const ViewerScreen = (props) => {
 
 	const auth = props.user === null ? false : true;
 	let regions = [];
@@ -56,4 +56,4 @@ const Viewerscreen = (props) => {
 	);
 };
 
-export default Viewerscreen;
+export default ViewerScreen;

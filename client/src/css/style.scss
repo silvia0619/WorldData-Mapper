@@ -207,8 +207,17 @@ html, body {
 }
 
 .modal-header {
-    color: $text-color;
-    font-size: 28px;
+    color: white;
+    background-color: rgb(208, 47, 47);
+    font-size: 20px;
+    text-align: center;
+}
+
+.wbutton.modal-header-button.texted {
+    color: black;
+    background-color: rgb(195,195,195);
+    font-size: 20px;
+    text-align: center;
 }
 
 .navbar-options {
@@ -235,4 +244,11 @@ html, body {
 
 .input-label {
     color: white;
+    text-align: right;
+}
+
+
+.welcome-text {
+    color: white;
+    text-align: center;
 }

@@ -48,7 +48,9 @@ const CreateAccount = (props) => {
 			{
 				loading ? <div />
 					: <WMMain>
+						<div className="modal-spacer">&nbsp;</div>
 						<WRow className="modal-col-gap signup-modal">
+							<WCol size="2"></WCol>
 							<WCol size="3">
 								<div className="input-label">Name:</div>
 							</WCol>
@@ -61,6 +63,7 @@ const CreateAccount = (props) => {
 						</WRow>
 						<div className="modal-spacer">&nbsp;</div>
 						<WRow className="modal-col-gap signup-modal">
+							<WCol size="2"></WCol>
 							<WCol size="3">
 								<div className="input-label">Email:</div>
 							</WCol>
@@ -73,6 +76,7 @@ const CreateAccount = (props) => {
 						</WRow>
 						<div className="modal-spacer">&nbsp;</div>
 						<WRow className="modal-col-gap signup-modal">
+							<WCol size="2"></WCol>
 							<WCol size="3">
 								<div className="input-label">Password:</div>
 							</WCol>
@@ -85,18 +89,21 @@ const CreateAccount = (props) => {
 						</WRow>
 					</WMMain>
 			}
-			<WMFooter>
-				<WRow>
-					<WCol size="6">
-						<WButton className="modal-button" onClick={handleCreateAccount} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="primary">
+			<WMFooter float="center">
+				<WRow className="modal-footer">
+					<WCol size="2"></WCol>
+					<WCol size="4">
+						<WButton className="modal-button" onClick={handleCreateAccount} span size="small" clickAnimation="ripple-light" hoverAnimation="darken" color="rgb(195,195,195)">
 							Create Account
 						</WButton>
 					</WCol>
-					<WCol size="6">
-						<WButton className="modal-button" onClick={() => props.setShowCreate(false)} span clickAnimation="ripple-light" hoverAnimation="darken" shape="rounded" color="primary">
+					<WCol size="1"></WCol>
+					<WCol size="4">
+						<WButton className="modal-button" onClick={() => props.setShowCreate(false)} span size="small" clickAnimation="ripple-light" hoverAnimation="darken" color="rgb(195,195,195)">
 							Cancel
 						</WButton>
 					</WCol>
+					<WCol size="2"></WCol>
 				</WRow>
 
 			</WMFooter>

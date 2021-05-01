@@ -5,7 +5,7 @@ import React, { useState } 				from 'react';
 import { useMutation, useQuery } 		from '@apollo/client';
 import { WLayout, WLMain, WButton } from 'wt-frontend';
 
-const SelectMapscreen = (props) => {
+const SelectMapScreen = (props) => {
 
 	const auth = props.user === null ? false : true;
 	let regions = [];
@@ -77,4 +77,4 @@ const SelectMapscreen = (props) => {
 	);
 };
 
-export default SelectMapscreen;
+export default SelectMapScreen;

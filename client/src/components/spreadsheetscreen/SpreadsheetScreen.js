@@ -1,19 +1,13 @@
-import Logo 							from '../navbar/Logo';
-import Login 							from '../modals/Login';
-import Update 							from '../modals/Update';
-import CreateAccount 					from '../modals/CreateAccount';
-import NavbarOptions 					from '../navbar/NavbarOptions';
 import SpreadsheetContents 				from './SpreadsheetContents'
 import * as mutations 					from '../../cache/mutations';
 import { GET_DB_REGIONS } 				from '../../cache/queries';
 import React, { useState } 				from 'react';
 import { useMutation, useQuery } 		from '@apollo/client';
-import { WNavbar, WSidebar, WNavItem } 	from 'wt-frontend';
-import { WLayout, WLHeader, WLMain, WButton } from 'wt-frontend';
+import { WLayout, WLMain, WButton } from 'wt-frontend';
 
 import { useHistory } from 'react-router-dom';
 
-const Spreadsheetscreen = (props) => {
+const SpreadsheetScreen = (props) => {
 
 	const auth = props.user === null ? false : true;
 	let regions = [];
@@ -87,4 +81,4 @@ const Spreadsheetscreen = (props) => {
 	);
 };
 
-export default Spreadsheetscreen;
+export default SpreadsheetScreen;
