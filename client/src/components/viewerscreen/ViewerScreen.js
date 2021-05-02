@@ -1,15 +1,16 @@
+import ViewerContents 				from './ViewerContents'
 import * as mutations 					from '../../cache/mutations';
 import { GET_DB_REGIONS } 				from '../../cache/queries';
 import React, { useState } 				from 'react';
 import { useMutation, useQuery } 		from '@apollo/client';
-import { WLayout, WLMain, WButton } from 'wt-frontend';
+import { WLayout } from 'wt-frontend';
 
 import { useHistory, Link } from 'react-router-dom';
 
 const ViewerScreen = (props) => {
 
 	const auth = props.user === null ? false : true;
-	let regions = [];
+	let selectedRegion;
 	let RegionTableData = [];
     let pathname = useHistory().location.pathname;
     let selectedId = pathname.substring(8, pathname.length);
@@ -22,14 +23,8 @@ const ViewerScreen = (props) => {
 		// Assign todolists 
 		for(let region of data.getAllRegions) {
 			if(region._id == selectedId) {
-				regions.push(region)
+				selectedRegion = region;
 			}
-		}
-		// create data for sidebar links
-		for(let region of regions) {
-			if(region) {
-				RegionTableData.push({_id: region._id, name: region.name});
-			}	
 		}
 		refetch();
 	}
@@ -48,10 +43,8 @@ const ViewerScreen = (props) => {
 
 
 	return (
-		<WLayout wLayout="lside-rside">
-			<WLMain w="30">
-				<li><Link to={"/spreadsheet/" + regions[0].parentId}>{regions[0].name}</Link></li>
-			</WLMain>
+		<WLayout wLayout="lside">
+			<ViewerContents selectedRegion={selectedRegion}/>
 		</WLayout>
 	);
 };
