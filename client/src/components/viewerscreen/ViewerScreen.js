@@ -11,28 +11,19 @@ const ViewerScreen = (props) => {
 
 	const auth = props.user === null ? false : true;
 	let selectedRegion;
-	let RegionTableData = [];
     let pathname = useHistory().location.pathname;
     let selectedId = pathname.substring(8, pathname.length);
 
-	const { loading, error, data, refetch } = useQuery(GET_DB_REGIONS);
-
-	if(loading) { console.log(loading, 'loading'); }
-	if(error) { console.log(error, 'error'); }
-	if(data) { 
-		// Assign todolists 
-		for(let region of data.getAllRegions) {
-			if(region._id == selectedId) {
-				selectedRegion = region;
-			}
+	for(let region of props.regions) {
+		if(region._id == selectedId) {
+			selectedRegion = region;
 		}
-		refetch();
 	}
 
 	const mutationOptions = {
 		refetchQueries: [{ query: GET_DB_REGIONS }], 
 		awaitRefetchQueries: true,
-		onCompleted: () => refetch()
+		onCompleted: () => props.rRefetch()
 	}
 
 	const [UpdateRegionField] 	= useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);

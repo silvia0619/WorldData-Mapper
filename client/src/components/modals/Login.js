@@ -30,6 +30,7 @@ const Login = (props) => {
 		}
 		if (data) {
 			props.fetchUser();
+			props.rRefetch();
 			history.replace("/select-map");
 			toggleLoading(false)
 			props.setShowLogin(false)

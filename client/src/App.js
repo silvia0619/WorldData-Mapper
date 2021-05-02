@@ -8,6 +8,7 @@ import Logo from './components/navbar/Logo';
 import Login from './components/modals/Login';
 import Update from './components/modals/Update';
 import CreateAccount from './components/modals/CreateAccount';
+import { useHistory } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client';
 import * as queries from './cache/queries';
@@ -17,16 +18,48 @@ import { WLayout, WLHeader, WNavbar, WNavItem } from 'wt-frontend';
 
 const App = () => {
 	let user = null;
-	const auth = user === null ? false : true;
-	let transactionStack = new jsTPS();
+    let transactionStack = new jsTPS();
 	let refreshTps = false;
-	const { loading, error, data, refetch } = useQuery(queries.GET_DB_USER);
+    const { loading, error, data, refetch } = useQuery(queries.GET_DB_USER);
+	let history = useHistory();
 
-	if (error) { console.log(error); }
-	if (loading) { console.log(loading); }
-	if (data) {
+    if(error) { console.log(error); }
+	if(loading) { console.log(loading); }
+	if(data) { 
 		let { getCurrentUser } = data;
-		if (getCurrentUser !== null) { user = getCurrentUser; }
+		if(getCurrentUser !== null) { user = getCurrentUser; }
+		// console.log("history", history);
+		// history.replace("/select-map");
+    }
+
+	const auth = user === null ? false : true;
+
+	let regions = [];
+	let RegionTableData = [];
+
+	const { loading: rLoading, error: rError, data: rData, refetch: rRefetch } = useQuery(queries.GET_DB_REGIONS);
+
+	if(rLoading) { console.log(rLoading, 'loading'); }
+	if(rError) { console.log(rError, 'error'); }
+	if(rData) { 
+		// Assign regions 
+		for(let region of rData.getAllRegions) {
+			if(region) {
+				regions.push(region)
+			}
+		}
+		for(let region of regions) {
+			if(region) {
+				RegionTableData.push({
+					_id: region._id,
+					parentId: region.parentId, 
+					name: region.name, 
+					capital: region.capital, 
+					leader: region.leader,
+					landmarks: region.landmarks
+				});
+			}	
+		}
 	}
 
 	const [showLogin, toggleShowLogin] = useState(false);
@@ -61,13 +94,14 @@ const App = () => {
 						</ul>
 						<ul>
 							<NavbarOptions
-								fetchUser={refetch} auth={auth} user={user}
+								fetchUser={refetch} auth={auth} user={user} 
 								setShowCreate={setShowCreate} setShowLogin={setShowLogin} setShowUpdate={setShowUpdate}
 							/>
 						</ul>
 					</WNavbar>
 				</WLHeader>
 				<Switch>
+				<Redirect exact from="/" to={ {pathname: "/welcome"} } />
 					<Route
 						path="/welcome"
 						name="welcome"
@@ -79,21 +113,24 @@ const App = () => {
 						path="/select-map"
 						name="select-map"
 						render={() =>
-							<SelectMapScreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
+							<SelectMapScreen RegionTableData={RegionTableData} rRefetch={rRefetch}
+								tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
 						}
 					/>
 					<Route
 						path="/spreadsheet"
 						name="spreadsheet"
 						render={() =>
-							<SpreadsheetScreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
+							<SpreadsheetScreen regions={regions} rRefetch={rRefetch}
+								tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
 						}
 					/>
 					<Route
 						path="/viewer"
 						name="viewer"
 						render={() =>
-							<ViewerScreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
+							<ViewerScreen regions={regions} rRefetch={rRefetch}
+								tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
 						}
 					/>
 					<Route />
@@ -101,8 +138,8 @@ const App = () => {
 					<Route path="/viewer/:id" children={<Child />} />
 				</Switch>
 				{showCreate && (<CreateAccount fetchUser={refetch} setShowCreate={setShowCreate} />)}
-				{showLogin && (<Login fetchUser={refetch} setShowLogin={setShowLogin} />)}
-				{showUpdate && (<Update fetchUser={refetch} setShowUpdate={setShowUpdate} />)}
+				{showLogin && (<Login fetchUser={refetch} setShowLogin={setShowLogin} rRefetch={rRefetch}/>)}
+				{showUpdate && (<Update user={user} fetchUser={refetch} setShowUpdate={setShowUpdate} />)}
 			</WLayout>
 		</BrowserRouter>
 	);

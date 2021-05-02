@@ -8,33 +8,25 @@ import { WLayout, WLMain, WButton } from 'wt-frontend';
 const SelectMapScreen = (props) => {
 
 	const auth = props.user === null ? false : true;
-	let regions = [];
-	let RegionTableData = [];
+	let MapTableData = [];
 
-	const { loading, error, data, refetch } = useQuery(GET_DB_REGIONS);
-
-	if(loading) { console.log(loading, 'loading'); }
-	if(error) { console.log(error, 'error'); }
-	if(data) { 
-		// Assign todolists 
-		for(let region of data.getAllRegions) {
-			if(region.parentId == "") {
-				regions.push(region)
-			}
+	for(let map of props.RegionTableData) {
+		if(map.parentId == "") {
+			MapTableData.push({
+				_id: map._id, 
+				name: map.name, 
+				capital: map.capital, 
+				leader: map.leader,
+				landmarks: map.landmarks
+			})
 		}
-		// create data for sidebar links
-		for(let region of regions) {
-			if(region) {
-				RegionTableData.push({_id: region._id, name: region.name});
-			}	
-		}
-		refetch();
 	}
+
 
 	const mutationOptions = {
 		refetchQueries: [{ query: GET_DB_REGIONS }], 
 		awaitRefetchQueries: true,
-		onCompleted: () => refetch()
+		onCompleted: () => props.rRefetch()
 	}
 
 	const [AddRegion] 			= useMutation(mutations.ADD_REGION, mutationOptions);
@@ -69,7 +61,7 @@ const SelectMapScreen = (props) => {
 	return (
 		<WLayout wLayout="lside-rside">
 			<WLMain>
-				<SelectMapContents auth={auth} listIDs={RegionTableData} createNewRegion={createNewRegion} 
+				<SelectMapContents auth={auth} listIDs={MapTableData} createNewRegion={createNewRegion} 
 									updateRegionField={updateRegionField} deleteRegion={deleteRegion}/>
 			</WLMain>
 		</WLayout>

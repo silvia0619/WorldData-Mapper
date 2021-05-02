@@ -12,6 +12,7 @@ const Logo = (props) => {
         <WButton className='logo' onClick={handleLogo} wType="texted" color="primary">
             World Data Mapper
         </WButton>
+        
     );
 };
 

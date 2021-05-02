@@ -17,9 +17,18 @@ const Update = (props) => {
 	};
 
 	const handleUpdateUser = async (e) => {
+		for (let field in input) {
+			if (!input.password) {
+				alert('The Password field must be filled out to update');
+				return;
+			}
+		}
+		const newName = input.name == "" ? props.user.name:input.name;
+		const newEmail = input.email == "" ? props.user.email:input.email;
+		
 		const { data } = await props.fetchUser();
 		const hashed = await bcrypt.hash(input.password, 10);
-		await UpdateUserField({ variables: { _id: data.getCurrentUser._id, email: input.email, password: hashed, name: input.name }});
+		await UpdateUserField({ variables: { _id: data.getCurrentUser._id, email: newEmail, password: hashed, name: newName }});
 		props.setShowUpdate(false)
 	};
 
@@ -39,7 +48,7 @@ const Update = (props) => {
 							<WCol size="7">
 								<WInput
 									className="modal-input" onBlur={updateInput} name="name" labelAnimation="up"
-									barAnimation="solid" placeholderText="" wType="outlined" inputType="text"
+									barAnimation="solid" value={props.user.name} wType="outlined" inputType="text"
 								/>
 							</WCol>
 						</WRow>
@@ -51,7 +60,7 @@ const Update = (props) => {
 							<WCol size="7">
 								<WInput
 									className="modal-input" onBlur={updateInput} name="email" labelAnimation="up"
-									barAnimation="solid" placeholderText="" wType="outlined" inputType="text"
+									barAnimation="solid" value={props.user.email} wType="outlined" inputType="text"
 								/>
 							</WCol>
 						</WRow>
@@ -63,7 +72,7 @@ const Update = (props) => {
 							<WCol size="7">
 								<WInput
 									className="modal-input" onBlur={updateInput} name="password" labelAnimation="up"
-									barAnimation="solid" placeholderText="" wType="outlined" inputType="password"
+									barAnimation="solid" wType="outlined" inputType="password"
 								/>
 							</WCol>
 						</WRow>
