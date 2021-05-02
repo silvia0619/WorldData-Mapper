@@ -147,38 +147,26 @@ html, body {
 	background-color: var(--blue-gray); 
 }
 
-.table-entry {
-    border-bottom: 1px solid;
-    color: $text-color;
-    transition: 0.05s ease-in-out;
-    height: 46px;
+.spreadsheet-entry-section {
+    text-align: center;
 }
 
-.table-entry:hover {
-    background-color: var(--warm-white-transparent);
+.spreadsheet-entry {
+    width: 100%;
+    background-color: rgb(195, 195, 195);
 }
 
-.table-header-button {
-    transition: 0.1s ease-in-out;
-    color: var(--light-gray);
+
+.spreadsheet-header {
+    background-color:rgb(208, 47, 47);
 }
 
-.table-header-button-disabled {
-    transition: 0.1s ease-in-out;
-    color: var(--warm-black);
-}
-
-.table-header {
-    border-bottom: 2px $text-color dotted;
-}
-
-.table-header-section {
-    font-size: 1.375rem;
-    font-weight: bold;
+.spreadsheet-header-section {
+    font-size: 1rem;
     color: $text-color;
 }
 
-.table-header-section:hover {
+.spreadsheet-header-section:hover {
     transition: 0.1s ease-in-out;
     cursor: pointer;
     background-color: var(--deep-blue-lighter);

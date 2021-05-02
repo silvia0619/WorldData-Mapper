@@ -23,17 +23,17 @@ const SpreadsheetTableEntry = (props) => {
     };
 
     return (
-        <WRow style={{border: '1px solid black'}}>
-            <WCol size="1"><WButton className="remove-region-icon" onClick={handleDeleting} wType="texted">
-                <i class="fas fa-times"></i></WButton></WCol>
-            <WCol size="2" style={{border: '1px solid black', textDecoration: 'none', color: 'black'}}>
-                <Link to={theId}>{props.name}</Link></WCol>
-            <WCol size="2" style={{border: '1px solid black'}}>{props.capital}</WCol>
-            <WCol size="2" style={{border: '1px solid black'}}>{props.leader}</WCol>
-            <WCol size="2" style={{border: '1px solid black'}}><img className='welcome-img' src="https://dummyimage.com/40x30/000/fff"/></WCol>
-            <WCol size="3" style={{border: '1px solid black', textDecoration: 'none', color: 'black'}}>
-                <Link to={selectedRegionId}>{props.landmarks}</Link></WCol>
-        </WRow>
+        <tr className="spreadsheet-entry">
+            <td>
+                <WButton className="remove-region-icon" onClick={handleDeleting} wType="texted">
+                <i class="fas fa-times"></i></WButton>
+                <Link style={{textDecoration: 'none', color: 'black'}} to={theId}>{props.name}</Link></td>
+            <td>{props.capital}</td>
+            <td>{props.leader}</td>
+            <td><img className='welcome-img' src="https://dummyimage.com/40x30/000/fff"/></td>
+            <td>
+                <Link style={{textDecoration: 'none', color: 'black'}} to={selectedRegionId}>{props.landmarks}</Link></td>
+        </tr>
     );
 };
 

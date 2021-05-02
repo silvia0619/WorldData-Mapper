@@ -81,11 +81,10 @@ const SpreadsheetScreen = (props) => {
 
 
 	return (
-		<WLayout wLayout="lside-rside">
-			<WLMain w="30">
+		<WLayout>
+			<WLMain className="spreadsheet-main">
                 <SpreadsheetContents auth={auth} listIDs={RegionTableData} selectedMapName={selectedMapName}
 					createNewRegion={createNewRegion} updateRegionField={updateRegionField} deleteRegion={deleteRegion}/>
-				<WButton onClick={createNewRegion}>createNewRegion</WButton>
 			</WLMain>
 		</WLayout>
 	);

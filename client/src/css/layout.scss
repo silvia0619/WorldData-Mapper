@@ -72,60 +72,23 @@ html {
     cursor: pointer;
 }
 
-.table {
-    display: flex;
-    //float: left;
-    width: 100%;
-    flex-direction: column;
-    //align-items: center;
-}
-
 .table-entries {
     overflow-y: scroll;
 }
 
-.table-header {
-    width: calc(100% - 56px);
+.spreadsheet-header {
     box-sizing: border-box;
-    margin-left: 24px;
-    margin-right: 32px;
 }
 
-.table-header-section {
-    width: 100%;
+.spreadsheet-header-section {
     height: 100%;
     padding: 0;
-    padding-top: 24px;
+    padding-top: 12px;
     padding-bottom: 12px;
 }
 
-.table-header-button {
-    padding: 0;
-    margin-left: 36px;
-}
-
-.table-header-button-disabled{
-    padding: 0;
-    margin-left: 12px;
-    cursor: default;
-}
-
-.table-header-buttons {
-    float: right;
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-
-.table-entry-buttons {
-    padding: 0;
-    margin-left: 36px;
-    // margin-right: 18px;
-}
-
-.table-entry-buttons-disabled {
-    padding: 0;
-    margin-left: 36px;
+.spreadsheet-entry {
+    width: 100%;
 }
 
 .button-group {
@@ -237,4 +200,22 @@ html {
 
 .map-table-icons {
     align-items: right;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+  
+td, th {
+    border: 1px solid black;
+    text-align: center;
+    padding: 8px;
+}
+
+.spreadsheet-main {
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
 }
