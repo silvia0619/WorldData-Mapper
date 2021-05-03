@@ -49,7 +49,8 @@ const SpreadsheetScreen = (props) => {
 			owner: props.user._id,
 			capital: 'capital',
 			leader: 'leader',
-			landmarks: ["landmark"]
+			landmarks: ["landmark"],
+			subregions: 0
 		}
 		const { data } = await AddRegion({ variables: { region: newRegion }, refetchQueries: [{ query: GET_DB_REGIONS }] });
 		if (data) {

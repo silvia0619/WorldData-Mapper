@@ -40,7 +40,7 @@ module.exports = {
 		addRegion: async (_, args) => {
 			const { region } = args;
 			const objectId = new ObjectId();
-			const { _id, parentId, name, owner, capital,  leader, landmarks } = region;
+			const { _id, parentId, name, owner, capital,  leader, landmarks, subregions } = region;
 			const newRegion = new Region({
 				_id: objectId,
                 parentId: parentId,
@@ -48,9 +48,18 @@ module.exports = {
                 owner: owner,
                 capital: capital,
                 leader: leader,
-                landmarks: landmarks
+                landmarks: landmarks,
+				subregions: subregions
 			});
 			const updated = await newRegion.save();
+			const theParentId = parentId? new ObjectId(parentId):"";
+
+			if (theParentId != 0) {
+				const parentRegion = await Region.findOne({_id: theParentId});
+				const newSubregionNum = parentRegion.subregions + 1;
+				const updatedParent = await Region.updateOne({_id: theParentId}, {subregions: newSubregionNum});
+			}
+			
 			if(updated) {
 				console.log(newRegion)
 				return newRegion;
@@ -63,7 +72,18 @@ module.exports = {
 		deleteRegion: async (_, args) => {
 			const { _id } = args;
 			const objectId = new ObjectId(_id);
+			// const region = await Region.findOne({_id: objectId});
 			const deleted = await Region.deleteOne({_id: objectId});
+			// const regionId = region._id;
+			
+			// const childRegions = await Region.find({parentId: regionId});
+			// while (childRegions) {
+			// 	console.log("***********************************while loop need to delete this too");
+			// 	childRegion = await Region.findOne({parentId: regionId});
+			// 	regionId = region._id;
+			// 	deleted = await Region.deleteOne({_id: regionId});
+			// }
+			
 			if(deleted) return true;
 			else return false;
 		},

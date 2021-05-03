@@ -1,7 +1,15 @@
 import React            from 'react';
+import { Link } from "react-router-dom";
 import { WRow, WCol, WButton } from 'wt-frontend';
 
 const RegionInfo = (props) => {
+    const theId = "/spreadsheet/" + props.selectedRegion.parentId;
+    let parentRName = "";
+    for (let region of props.RegionTableData) {
+        if (region._id == props.selectedRegion.parentId) {
+            parentRName = region.name;
+        }
+    }
     return (
         <>
             <div className="modal-spacer">&nbsp;</div>
@@ -16,7 +24,9 @@ const RegionInfo = (props) => {
                 <WCol size="12">Region Name: {props.selectedRegion.name}</WCol>
             </WRow>
             <WRow>
-                <WCol size="12">Parent Region: {props.selectedRegion.parentId}</WCol>
+                <WCol size="12">Parent Region: 
+                    <Link style={{textDecoration: 'none', color: '#4D84A3'}} to={theId}>{parentRName}</Link>
+                </WCol>
             </WRow>
             <WRow>
                 <WCol size="12">Region Capital: {props.selectedRegion.capital}</WCol>

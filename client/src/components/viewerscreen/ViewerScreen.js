@@ -35,7 +35,7 @@ const ViewerScreen = (props) => {
 
 	return (
 		<WLayout wLayout="lside">
-			<ViewerContents selectedRegion={selectedRegion}/>
+			<ViewerContents selectedRegion={selectedRegion} RegionTableData={props.RegionTableData}/>
 		</WLayout>
 	);
 };

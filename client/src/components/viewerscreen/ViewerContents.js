@@ -9,7 +9,7 @@ const SelectMapContents = (props) => {
     return (
         <>
             <WLSide className="region-info">
-                <RegionInfo selectedRegion={props.selectedRegion}/>
+                <RegionInfo RegionTableData={props.RegionTableData}selectedRegion={props.selectedRegion}/>
             </WLSide>
             <WLMain className="landmark">
                 <WRow style={{color: 'white', tetextAlign: 'center'}}><WCol size="12">Region Landmarks:</WCol></WRow>

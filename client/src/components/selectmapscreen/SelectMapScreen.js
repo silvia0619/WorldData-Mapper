@@ -41,7 +41,8 @@ const SelectMapScreen = (props) => {
 			owner: props.user._id,
         	capital: '',
 			leader: '',
-        	landmarks: []
+        	landmarks: [],
+			subregions: 0
 		}
 		const { data } = await AddRegion({ variables: { region: newRegion }, refetchQueries: [{ query: GET_DB_REGIONS }] });
 		if(data) {

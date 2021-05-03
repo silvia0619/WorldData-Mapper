@@ -22,6 +22,10 @@ const App = () => {
 	let refreshTps = false;
     const { loading, error, data, refetch } = useQuery(queries.GET_DB_USER);
 	let history = useHistory();
+	let pathname = "";
+	if (history) {
+		pathname = history.location.pathname;
+	}
 
     if(error) { console.log(error); }
 	if(loading) { console.log(loading); }
@@ -89,7 +93,8 @@ const App = () => {
 					<WNavbar color="colored">
 						<ul>
 							<WNavItem>
-								<Logo className='logo' />
+								<Logo className='logo' RegionTableData={RegionTableData} rRefetch={rRefetch}
+									pathname={pathname} />
 							</WNavItem>
 						</ul>
 						<ul>
@@ -129,7 +134,7 @@ const App = () => {
 						path="/viewer"
 						name="viewer"
 						render={() =>
-							<ViewerScreen regions={regions} rRefetch={rRefetch}
+							<ViewerScreen regions={regions} rRefetch={rRefetch} RegionTableData={RegionTableData}
 								tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
 						}
 					/>

@@ -41,6 +41,7 @@ export const ADD_REGION = gql`
 			capital
 			leader
 			landmarks
+			subregions
 		}
 	}
 `;
