@@ -72,16 +72,14 @@ module.exports = {
 		deleteRegion: async (_, args) => {
 			const { _id } = args;
 			const objectId = new ObjectId(_id);
-			// const region = await Region.findOne({_id: objectId});
 			const deleted = await Region.deleteOne({_id: objectId});
-			// const regionId = region._id;
-			
-			// const childRegions = await Region.find({parentId: regionId});
-			// while (childRegions) {
-			// 	console.log("***********************************while loop need to delete this too");
-			// 	childRegion = await Region.findOne({parentId: regionId});
-			// 	regionId = region._id;
-			// 	deleted = await Region.deleteOne({_id: regionId});
+			const children = await Region.find({parentId: _id});
+			// while (children) {
+			// 	for (let child of children) {
+			// 		children = await Region.find({parentId: child._id});
+			// 	}
+			// 	children = await Region.find({parentId: _id});
+			// 	Region.deleteMany({_parentId: _id});
 			// }
 			
 			if(deleted) return true;

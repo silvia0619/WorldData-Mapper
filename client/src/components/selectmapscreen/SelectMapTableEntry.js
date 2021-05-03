@@ -1,6 +1,7 @@
 import React, { useState }  from 'react';
 import { WRow, WCol, WInput, WButton } from 'wt-frontend';
 import { Link } from "react-router-dom";
+import Delete from '../modals/Delete';
 
 const SelectMapTableEntry = (props) => {
     const [editing, toggleEditing] = useState(false);
@@ -21,6 +22,11 @@ const SelectMapTableEntry = (props) => {
         props.updateRegionField(props._id, name, value);
     };
 
+    const [showDelete, toggleShowDelete] = useState(false);
+    const setShowDelete = () => {
+		toggleShowDelete(!showDelete);
+	};
+
     return (
         <WRow>
             <WCol size="10" style={{paddingLeft: 15 + 'px'}}>
@@ -33,7 +39,8 @@ const SelectMapTableEntry = (props) => {
                 }
             </WCol>
             <WCol size="1"><WButton className="map-table-icons" onClick={handleEditing} wType="texted"><i class="fas fa-pen"></i></WButton></WCol>
-            <WCol size="1"><WButton className="map-table-icons" onClick={handleDeleting} wType="texted"><i class="fas fa-trash-alt"></i></WButton></WCol>
+            <WCol size="1"><WButton className="map-table-icons" onClick={setShowDelete} wType="texted"><i class="fas fa-trash-alt"></i></WButton></WCol>
+            {showDelete && (<Delete setShowDelete={setShowDelete} handleDeleting={handleDeleting}/>)}
         </WRow>
     );
 };

@@ -9,7 +9,7 @@ const Logo = (props) => {
     let ancestor = "";
 
     if (pathname !== props.pathname) {
-        //props.rRefetch(); //**************need to be fixed*************infinite loop************
+        props.rRefetch(); //**************need to be fixed*************infinite loop************
     }
     if (pathname.substring(0, 3) == "/sp") {
         theId = pathname.substring(13, pathname.length);

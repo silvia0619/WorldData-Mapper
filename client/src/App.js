@@ -60,7 +60,8 @@ const App = () => {
 					name: region.name, 
 					capital: region.capital, 
 					leader: region.leader,
-					landmarks: region.landmarks
+					landmarks: region.landmarks,
+					subregions: region.subregions
 				});
 			}	
 		}

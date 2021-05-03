@@ -35,7 +35,7 @@ const RegionInfo = (props) => {
                 <WCol size="12">Region Leader: {props.selectedRegion.leader}</WCol>
             </WRow>
             <WRow>
-                <WCol size="12"># of sub Regions: {props.selectedRegion.name}</WCol>
+                <WCol size="12"># of sub Regions: {props.selectedRegion.subregions}</WCol>
             </WRow>
         </>
     );
