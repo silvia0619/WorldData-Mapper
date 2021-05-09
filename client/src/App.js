@@ -4,6 +4,7 @@ import SelectMapScreen from './components/selectmapscreen/SelectMapScreen';
 import SpreadsheetScreen from './components/spreadsheetscreen/SpreadsheetScreen';
 import ViewerScreen from './components/viewerscreen/ViewerScreen';
 import NavbarOptions from './components/navbar/NavbarOptions';
+import Navigator from './components/navbar/Navigator';
 import Logo from './components/navbar/Logo';
 import Login from './components/modals/Login';
 import Update from './components/modals/Update';
@@ -95,6 +96,12 @@ const App = () => {
 						<ul>
 							<WNavItem>
 								<Logo className='logo' RegionTableData={RegionTableData} rRefetch={rRefetch}
+									pathname={pathname} />
+							</WNavItem>
+						</ul>
+						<ul>
+							<WNavItem>
+								<Navigator RegionTableData={RegionTableData} rRefetch={rRefetch} regions={regions}
 									pathname={pathname} />
 							</WNavItem>
 						</ul>

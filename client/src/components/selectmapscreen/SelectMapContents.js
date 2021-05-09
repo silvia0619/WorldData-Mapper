@@ -1,7 +1,7 @@
 import React            from 'react';
 import { WRow, WCol, WButton } from 'wt-frontend';
 import SelectMapTableContents    from './SelectMapTableContents';
-
+import Globe from '../globe.jpg';
 const SelectMapContents = (props) => {
     return (
         <>
@@ -15,7 +15,7 @@ const SelectMapContents = (props) => {
                     />
                 </WCol>
                 <WCol size="6">
-                    <WRow><img className='welcome-img' src="https://dummyimage.com/370x370/000/fff"/></WRow>
+                    <WRow><img src={Globe} alt="globe" width="370" height="370"/></WRow>
                     <WRow><WButton className="create-map-button" onClick={props.createNewRegion} style={{paddingLeft: 130 + 'px'}}>
                         Create New Map</WButton></WRow>
                 </WCol>

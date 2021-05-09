@@ -1,5 +1,6 @@
 import React from 'react';
 import { WLayout, WLMain, WRow, WCol } from 'wt-frontend';
+import Globe from '../globe.jpg';
 
 const WelcomeScreen = (props) => {
 
@@ -11,7 +12,7 @@ const WelcomeScreen = (props) => {
 				<div className="modal-spacer">&nbsp;</div>
 				<WRow>
 					<WCol size="3"></WCol>
-					<WCol size="5"><img className='welcome-img' src="https://dummyimage.com/400x400/000/fff"/></WCol>
+					<WCol size="5"><img src={Globe} alt="globe" width="400" height="400"/></WCol>
 				</WRow>
 		
 				<WRow>

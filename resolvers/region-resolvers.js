@@ -107,7 +107,7 @@ module.exports = {
 			for(let i = 0; i < sortedRegionsId.length; i++){
 				const rId = new ObjectId(sortedRegionsId[i]);
 				const theFound = await Region.findOne({_id: rId});
-				sortedRegions.push(theFound);
+				theFound? sortedRegions.push(theFound):"";
 			}
 			switch(criteria) {
 				case 'name':

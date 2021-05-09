@@ -1,6 +1,7 @@
 import React, { useState }  from 'react';
 import { WInput, WButton } from 'wt-frontend';
 import { Link } from "react-router-dom";
+import Delete from '../modals/Delete';
 
 const SpreadsheetTableEntry = (props) => {
     const [editingName, toggleNameEdit] = useState(false);
@@ -46,11 +47,18 @@ const SpreadsheetTableEntry = (props) => {
         props.deleteRegion(props._id);
     };
 
+    const [showDelete, toggleShowDelete] = useState(false);
+
+    const setShowDelete = () => {
+		toggleShowDelete(!showDelete);
+	};
+
     return (
         <tr className="spreadsheet-entry">
             <td>
-                <WButton className="remove-region-icon" onClick={handleDeleting} wType="texted">
+                <WButton className="remove-region-icon" onClick={setShowDelete} wType="texted">
                 <i class="fas fa-times"></i></WButton>
+                {showDelete && (<Delete setShowDelete={setShowDelete} handleDeleting={handleDeleting}/>)}
                 <WButton className="remove-region-icon" onClick={() => toggleNameEdit(!editingName)} wType="texted">
                 <i class="fas fa-pen"></i></WButton>
                 {
@@ -61,7 +69,7 @@ const SpreadsheetTableEntry = (props) => {
                             autoFocus={true} defaultValue={name} type='text'
                             inputClass="table-input-class"
                         />
-                        : <Link style={{textDecoration: 'none', color: 'black'}} to={theId}>{name}</Link>
+                        : <Link style={{textDecoration: 'none', color: "#4D84A3"}} to={theId}>{name}</Link>
                 }
             </td>
             <td>
@@ -96,7 +104,7 @@ const SpreadsheetTableEntry = (props) => {
             </td>
             <td><img className='welcome-img' src="https://dummyimage.com/40x30/000/fff"/></td>
             <td>
-                <Link style={{textDecoration: 'none', color: 'black'}} to={selectedRegionId}>{landmarks}</Link></td>
+                <Link style={{textDecoration: 'none', color: "#4D84A3"}} to={selectedRegionId}>{landmarks}</Link></td>
         </tr>
     );
 };
