@@ -2,13 +2,12 @@ import ViewerContents 				from './ViewerContents'
 import * as mutations 					from '../../cache/mutations';
 import { GET_DB_REGIONS } 				from '../../cache/queries';
 import React, { useState } 				from 'react';
-import { useMutation, useQuery } 		from '@apollo/client';
-import { WLayout } from 'wt-frontend';
+import { useMutation } 		from '@apollo/client';
+import { useHistory } from 'react-router-dom';
 
-import { useHistory, Link } from 'react-router-dom';
+import { EditRegion_Transaction} 			from '../../utils/jsTPS';
 
 const ViewerScreen = (props) => {
-
 	const auth = props.user === null ? false : true;
 	let selectedRegion;
     let pathname = useHistory().location.pathname;
@@ -26,17 +25,36 @@ const ViewerScreen = (props) => {
 		onCompleted: () => props.rRefetch()
 	}
 
+	const [canUndo, setCanUndo] = useState(props.tps.hasTransactionToUndo());
+	const [canRedo, setCanRedo] = useState(props.tps.hasTransactionToRedo());
+
+	const tpsUndo = async () => {
+		const ret = await props.tps.undoTransaction();
+		if(ret) {
+			setCanUndo(props.tps.hasTransactionToUndo());
+			setCanRedo(props.tps.hasTransactionToRedo());
+		}
+	}
+
+	const tpsRedo = async () => {
+		const ret = await props.tps.doTransaction();
+		if(ret) {
+			setCanUndo(props.tps.hasTransactionToUndo());
+			setCanRedo(props.tps.hasTransactionToRedo());
+		}
+	}
+
 	const [UpdateRegionField] 	= useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
 
-	const updateRegionField = async (_id, field, value) => {
-		const { data } = await UpdateRegionField({ variables: { _id: _id, field: field, value: value }});
+	const editRegion = async (_id, field, value, prev) => {
+		let transaction = new EditRegion_Transaction(_id, field, prev, value, UpdateRegionField);
+		props.tps.addTransaction(transaction);
+		tpsRedo();
 	};
 
 
 	return (
-		<WLayout wLayout="lside">
-			<ViewerContents selectedRegion={selectedRegion} RegionTableData={props.RegionTableData}/>
-		</WLayout>
+		<ViewerContents selectedRegion={selectedRegion} RegionTableData={props.RegionTableData} editRegion={editRegion}/>
 	);
 };
 

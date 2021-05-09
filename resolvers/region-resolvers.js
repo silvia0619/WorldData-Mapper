@@ -14,11 +14,11 @@ module.exports = {
 		getAllRegions: async (_, __, { req }) => {
 			const _id = new ObjectId(req.userId);
 			if(!_id) { return([])};
-			const regions = await Region.find({owner: _id}).sort({updatedAt: 'descending'});
+			// const regions = await Region.find({owner: _id}).sort({updatedAt: 'descending'});
+			const regions = await Region.find({owner: _id});
 			if(regions) {
 				return (regions);
 			} 
-
 		},
 		/** 
 		 	@param 	 {object} args - a todolist id
@@ -52,12 +52,13 @@ module.exports = {
 				subregions: subregions
 			});
 			const updated = await newRegion.save();
-			const theParentId = parentId? new ObjectId(parentId):"";
 
+			const theParentId = parentId? new ObjectId(parentId):"";
 			if (theParentId != 0) {
 				const parentRegion = await Region.findOne({_id: theParentId});
-				const newSubregionNum = parentRegion.subregions + 1;
-				const updatedParent = await Region.updateOne({_id: theParentId}, {subregions: newSubregionNum});
+				const newSubregion = parentRegion.subregions;
+				newSubregion.push(newRegion._id);
+				const updatedParent = await Region.updateOne({_id: theParentId}, {subregions: newSubregion});
 			}
 			
 			if(updated) {
@@ -72,15 +73,15 @@ module.exports = {
 		deleteRegion: async (_, args) => {
 			const { _id } = args;
 			const objectId = new ObjectId(_id);
+			const theRegion = await Region.findOne({_id: objectId});
+			const theParentIdstr = theRegion.parentId;
+			const theParentId = theParentIdstr? new ObjectId(theParentIdstr):"";
+			if (theParentId != 0) {
+				const parentRegion = await Region.findOne({_id: theParentId});
+				const newSubregion = parentRegion.subregions.filter(subregion => subregion !== theRegion._id)
+				const updatedParent = await Region.updateOne({_id: theParentId}, {subregions: newSubregion});
+			}
 			const deleted = await Region.deleteOne({_id: objectId});
-			const children = await Region.find({parentId: _id});
-			// while (children) {
-			// 	for (let child of children) {
-			// 		children = await Region.find({parentId: child._id});
-			// 	}
-			// 	children = await Region.find({parentId: _id});
-			// 	Region.deleteMany({_parentId: _id});
-			// }
 			
 			if(deleted) return true;
 			else return false;
@@ -96,5 +97,37 @@ module.exports = {
 			if(updated) return value;
 			else return "";
 		},
+
+		sortRegions: async (_, args) => {
+			const { _id, criteria } = args;
+			const objectId = new ObjectId(_id);
+			const found = await Region.findOne({_id: objectId});
+			let sortedRegionsId = found.subregions;
+			let sortedRegions = [];
+			for(let i = 0; i < sortedRegionsId.length; i++){
+				const rId = new ObjectId(sortedRegionsId[i]);
+				const theFound = await Region.findOne({_id: rId});
+				sortedRegions.push(theFound);
+			}
+			switch(criteria) {
+				case 'name':
+					sortedRegions.sort((a, b) => a.name.localeCompare(b.name));
+					break;
+				case 'capital':
+					sortedRegions.sort((a, b) => a.capital.localeCompare(b.capital));
+					break;
+				case 'leader':
+					sortedRegions.sort((a, b) => a.leader.localeCompare(b.leader));
+					break;
+				default:
+					return found.items;
+			}
+			sortedRegionsId = [];
+			for(let i = 0; i < sortedRegions.length; i++){
+				sortedRegionsId.push(sortedRegions[i]._id);
+			}
+			const updated = await Region.updateOne({_id: objectId}, { subregions: sortedRegionsId })
+			if(updated) return (sortedRegions);
+		}
 	}
 }

@@ -8,9 +8,9 @@ const SpreadTopContent = (props) => {
             <WRow>
                 <WCol size="1"><WButton className="add-region-icon" onClick={props.createNewRegion} wType="texted" style={{color: "green"}}>
                     <i class="fas fa-plus"></i></WButton></WCol>
-                <WCol size="1"><WButton className="add-region-icon" wType="texted" style={{color: "white"}}>
+                <WCol size="1"><WButton className="add-region-icon" onClick={props.undo}wType="texted" style={{color: "white"}}>
                     <i class="fas fa-arrow-left"></i></WButton></WCol>
-                <WCol size="1"><WButton className="add-region-icon" onClick={props.createNewRegion} wType="texted" style={{color: "white"}}>
+                <WCol size="1"><WButton className="add-region-icon" onClick={props.redo} wType="texted" style={{color: "white"}}>
                     <i class="fas fa-arrow-right"></i></WButton></WCol>
                 <WCol size="1"></WCol>
                 <WCol size="2" style={{color: "white"}}>Region Name:</WCol>

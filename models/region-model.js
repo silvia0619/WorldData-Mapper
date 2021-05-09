@@ -26,7 +26,7 @@ const regionSchema = new Schema(
             type: [String]
         },
         subregions: {
-            type: Number
+            type: [String]
         }
     }, { timestamps: true }
 );

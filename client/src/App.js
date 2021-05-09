@@ -112,7 +112,7 @@ const App = () => {
 						path="/welcome"
 						name="welcome"
 						render={() =>
-							<WelcomeScreen tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
+							<WelcomeScreen fetchUser={refetch} user={user} refreshTps={refreshTps} />
 						}
 					/>
 					<Route
@@ -120,15 +120,15 @@ const App = () => {
 						name="select-map"
 						render={() =>
 							<SelectMapScreen RegionTableData={RegionTableData} rRefetch={rRefetch}
-								tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
+								fetchUser={refetch} user={user} refreshTps={refreshTps} />
 						}
 					/>
 					<Route
 						path="/spreadsheet"
 						name="spreadsheet"
 						render={() =>
-							<SpreadsheetScreen regions={regions} rRefetch={rRefetch}
-								tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
+							<SpreadsheetScreen regions={regions} rRefetch={rRefetch} tps={transactionStack}
+								fetchUser={refetch} user={user} refreshTps={refreshTps} />
 						}
 					/>
 					<Route

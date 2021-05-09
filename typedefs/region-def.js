@@ -10,7 +10,7 @@ const typeDefs = gql `
         capital: String!
 		leader: String!
         landmarks: [String]
-		subregions: Int!
+		subregions: [String]
 	}
 	extend type Query {
 		getAllRegions: [Region]
@@ -20,6 +20,7 @@ const typeDefs = gql `
 		addRegion(region: RegionInput!): Region	
 		deleteRegion(_id: String!): Boolean
 		updateRegionField(_id: String!, field: String!, value: String!): String
+		sortRegions(_id: String!, criteria: String!): [Region]
 	}
 	input FieldInput {
 		_id: String
@@ -34,7 +35,7 @@ const typeDefs = gql `
         capital: String!
 		leader: String!
         landmarks: [String]
-		subregions: Int!
+		subregions: [String]
 	}
 `;
 

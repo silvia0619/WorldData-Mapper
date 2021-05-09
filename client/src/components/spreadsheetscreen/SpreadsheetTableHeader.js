@@ -6,21 +6,33 @@ const SpreadsheetTableHeader = (props) => {
     return (
         <tr className="spreadsheet-header">
             <td size="3">
-                <WButton className='spreadsheet-header-section' wType="texted" >Name<i class="fas fa-arrow-down"></i></WButton>
+                <div className='spreadsheet-header-section'>
+                    Name<WButton wType="texted" onClick={() => props.sortRegions("name")}><i class="fas fa-arrow-down"></i></WButton>
+                </div>
             </td>
 
             <td size="2">
-                <WButton className='spreadsheet-header-section' wType="texted">Capital<i class="fas fa-arrow-down"></i></WButton>
+                <div className='spreadsheet-header-section'>
+                    Capital<WButton wType="texted" onClick={() => props.sortRegions("capital")}><i class="fas fa-arrow-down"></i></WButton>
+                </div>            
             </td>
 
             <td size="2">
-                <WButton className='spreadsheet-header-section' wType="texted" >Leader<i class="fas fa-arrow-down"></i></WButton>
+                <div className='spreadsheet-header-section'>
+                    Leader<WButton wType="texted" onClick={() => props.sortRegions("leader")}><i class="fas fa-arrow-down"></i></WButton>
+                </div>            
             </td>
+
             <td size="2">
-                <WButton className='spreadsheet-header-section' wType="texted" >Flag<i class="fas fa-arrow-down"></i></WButton>
+                <div className='spreadsheet-header-section'>
+                    Flag
+                </div>            
             </td>
+
             <td size="3">
-                <WButton className='spreadsheet-header-section' wType="texted" >Landmarks<i class="fas fa-arrow-down"></i></WButton>
+                <div className='spreadsheet-header-section'>
+                    Landmarks
+                </div>            
             </td>
         </tr>
     );

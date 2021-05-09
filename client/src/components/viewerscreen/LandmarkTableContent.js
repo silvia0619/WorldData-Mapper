@@ -3,7 +3,6 @@ import LandmarkTableEntry from './LandmarkTableEntry';
 import { WCard } from 'wt-frontend';
 
 const LandmarkTableContent = (props) => {
-    let tempID = 0
     return (
         <WCard className="landmark-table">
             {

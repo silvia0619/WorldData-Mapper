@@ -13,7 +13,7 @@ const SelectMapScreen = (props) => {
 	for(let map of props.RegionTableData) {
 		if(map.parentId == "") {
 			MapTableData.push({
-				_id: map._id, 
+				_id: map._id,
 				name: map.name, 
 				capital: map.capital, 
 				leader: map.leader,
@@ -42,7 +42,7 @@ const SelectMapScreen = (props) => {
         	capital: '',
 			leader: '',
         	landmarks: [],
-			subregions: 0
+			subregions: []
 		}
 		const { data } = await AddRegion({ variables: { region: newRegion }, refetchQueries: [{ query: GET_DB_REGIONS }] });
 		if(data) {

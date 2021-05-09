@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { WButton } from 'wt-frontend';
 import { useHistory } from 'react-router-dom';
 
@@ -8,8 +8,9 @@ const Logo = (props) => {
     let theId = "";
     let ancestor = "";
 
+
     if (pathname !== props.pathname) {
-        props.rRefetch(); //**************need to be fixed*************infinite loop************
+        //props.rRefetch(); //**************need to be fixed*************infinite loop************
     }
     if (pathname.substring(0, 3) == "/sp") {
         theId = pathname.substring(13, pathname.length);
@@ -22,7 +23,6 @@ const Logo = (props) => {
     for (let region of props.RegionTableData) {
         if (region._id == theId) {
             theRegion = region;
-            console.log("theRegion", theRegion);
         }
     }
     while (theRegion && theRegion.parentId != "") {
@@ -49,6 +49,12 @@ const Logo = (props) => {
                 World Data Mapper
             </WButton>
             <div style={{ color: "white" }}>{ancestor}</div>
+            <WButton className="add-region-icon" onClick={props.undo}wType="texted" style={{color: "white"}}>
+                <i class="fas fa-arrow-left"></i>
+            </WButton>
+            <WButton className="add-region-icon" onClick={props.undo}wType="texted" style={{color: "white"}}>
+                <i class="fas fa-arrow-right"></i>
+            </WButton>
         </>
 
     );
