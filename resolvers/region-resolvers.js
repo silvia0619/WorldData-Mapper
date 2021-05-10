@@ -91,9 +91,21 @@ module.exports = {
 			@returns {boolean} true on successful update, false on failure
 		**/
 		updateRegionField: async (_, args) => {
-			const { field, value, _id } = args;
+			const { value, _id } = args;
 			const objectId = new ObjectId(_id);
 			const updated = await Region.updateOne({_id: objectId}, {[field]: value});
+			if(updated) return value;
+			else return "";
+		},
+
+		/** 
+		 	@param 	 {object} args - a todolist objectID, field, and the update value
+			@returns {boolean} true on successful update, false on failure
+		**/
+		updateLandmarksField: async (_, args) => {
+			const { value, _id } = args;
+			const objectId = new ObjectId(_id);
+			const updated = await Region.updateOne({_id: objectId}, {landmarks: value});
 			if(updated) return value;
 			else return "";
 		},

@@ -40,7 +40,6 @@ const Navigator = (props) => {
     let prevSibling = "";
     let nextSibling = "";
     for (let region of props.RegionTableData) {
-        console.log(theRegion);
         if (theRegion && region._id == theRegion.parentId) {
             console.log(region.subregions);
             if (region.subregions.length > 1) {

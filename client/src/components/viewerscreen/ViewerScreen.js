@@ -4,21 +4,32 @@ import { GET_DB_REGIONS } 				from '../../cache/queries';
 import React, { useState } 				from 'react';
 import { useMutation } 		from '@apollo/client';
 import { useHistory } from 'react-router-dom';
-
-import { EditRegion_Transaction} 			from '../../utils/jsTPS';
+import { EditRegion_Transaction, EditLandmarks_Transaction } 			from '../../utils/jsTPS';
 
 const ViewerScreen = (props) => {
 	const auth = props.user === null ? false : true;
 	let selectedRegion;
     let pathname = useHistory().location.pathname;
     let selectedId = pathname.substring(8, pathname.length);
+	let allLandmarks = [];
 
 	for(let region of props.regions) {
 		if(region._id == selectedId) {
 			selectedRegion = region;
+			for (let i = 0; i < selectedRegion.landmarks.length; i++){
+				allLandmarks.push({_id: selectedRegion._id, regionName: selectedRegion.name, name: selectedRegion.landmarks[i]})
+			}
 		}
 	}
-
+	for (let i = 0; i < selectedRegion.subregions.length; i++) {
+		for (let region of props.regions) {
+			if (region._id == selectedRegion.subregions[i]){
+				for (let j = 0; j < region.landmarks.length; j++){
+					allLandmarks.push({_id: region._id, regionName: region.name, name: region.landmarks[j]})
+				}
+			}
+		}
+	}
 	const mutationOptions = {
 		refetchQueries: [{ query: GET_DB_REGIONS }], 
 		awaitRefetchQueries: true,
@@ -45,16 +56,27 @@ const ViewerScreen = (props) => {
 	}
 
 	const [UpdateRegionField] 	= useMutation(mutations.UPDATE_REGION_FIELD, mutationOptions);
+	const [UpdateLandmarksField]= useMutation(mutations.UPDATE_LANDMARKS_FIELD, mutationOptions);
 
 	const editRegion = async (_id, field, value, prev) => {
 		let transaction = new EditRegion_Transaction(_id, field, prev, value, UpdateRegionField);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
 	};
-
+	//opcode 1: add, 2: delete, 3: edit
+	const editLandmarks = async (_id, opcode, value, prev) => {
+		if (opcode === 1) {
+			let newLandmarks = Object.assign([], selectedRegion.landmarks);
+			newLandmarks.push(value);
+			var transaction = new EditLandmarks_Transaction(selectedId, "landmarks", selectedRegion.landmarks, newLandmarks, UpdateLandmarksField);
+		}
+		props.tps.addTransaction(transaction);
+		tpsRedo();
+	};
 
 	return (
-		<ViewerContents selectedRegion={selectedRegion} RegionTableData={props.RegionTableData} editRegion={editRegion}/>
+		<ViewerContents selectedRegion={selectedRegion} RegionTableData={props.RegionTableData} 
+			allLandmarks={allLandmarks} editRegion={editRegion} editLandmarks={editLandmarks}/>
 	);
 };
 

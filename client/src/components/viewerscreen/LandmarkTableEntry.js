@@ -2,7 +2,7 @@ import React  from 'react';
 
 const LandmarkTableEntry = (props) => {
     return (
-        <div>{props.name}</div>
+        <div>{props.name}-{props.regionName}</div>
     );
 };
 
