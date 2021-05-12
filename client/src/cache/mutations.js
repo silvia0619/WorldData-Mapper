@@ -48,7 +48,16 @@ export const ADD_REGION = gql`
 
 export const DELETE_REGION = gql`
 	mutation DeleteRegion($_id: String!) {
-		deleteRegion(_id: $_id)
+		deleteRegion(_id: $_id){
+			_id
+			parentId
+			name
+			owner
+			capital
+			leader
+			landmarks
+			subregions
+		}
 	}
 `;
 

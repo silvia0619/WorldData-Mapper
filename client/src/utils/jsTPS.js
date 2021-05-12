@@ -1,5 +1,3 @@
-import { GET_DB_REGIONS } from '../cache/queries';
-
 export class jsTPS_Transaction {
     constructor() { };
     doTransaction() { };
@@ -22,12 +20,19 @@ export class UpdateRegions_Transaction extends jsTPS_Transaction {
     async doTransaction() {
         let data;
         this.opcode === 0 ? { data } = await this.deleteFunction({ variables: { _id: this._id } })
-                            : { data } = await this.addFunction({ variables: { region: this.newRegion } })
-        if (this.opcode !== 0) {
-            this._id = data.addRegion._id;
-        }
-        else { 
-            console.log(data); 
+            : { data } = await this.addFunction({ variables: { region: this.newRegion } });
+        if (this.opcode !== 0) { this._id = data.addRegion._id; }
+        else {
+            this.newRegion = {
+                _id: data.deleteRegion._id,
+                parentId: data.deleteRegion.parentId,
+                name: data.deleteRegion.name,
+                owner: data.deleteRegion.owner,
+                capital: data.deleteRegion.capital,
+                leader: data.deleteRegion.leader,
+                landmarks: data.deleteRegion.landmarks,
+                subregions: data.deleteRegion.subregions
+            }
         }
         return data;
     }
@@ -35,7 +40,20 @@ export class UpdateRegions_Transaction extends jsTPS_Transaction {
     async undoTransaction() {
         let data;
         this.opcode === 1 ? { data } = await this.deleteFunction({ variables: { _id: this._id } })
-                            : { data } = await this.addFunction({ variables: { region: this.newRegion } })
+            : { data } = await this.addFunction({ variables: { region: this.newRegion } })
+        if (this.opcode !== 1) { this._id = data.addRegion._id; }
+        else {
+            this.newRegion = {
+                _id: data.deleteRegion._id,
+                parentId: data.deleteRegion.parentId,
+                name: data.deleteRegion.name,
+                owner: data.deleteRegion.owner,
+                capital: data.deleteRegion.capital,
+                leader: data.deleteRegion.leader,
+                landmarks: data.deleteRegion.landmarks,
+                subregions: data.deleteRegion.subregions
+            }
+        }
         return data;
     }
 }
@@ -51,12 +69,10 @@ export class EditRegion_Transaction extends jsTPS_Transaction {
         this.updateFunction = callback;
     }
     async doTransaction() {
-        console.log("DDDDDDDDDDDDD");
         const { data } = await this.updateFunction({ variables: { _id: this._id, field: this.field, value: this.update } });
         return data;
     }
     async undoTransaction() {
-        console.log("UUUUUUUUUUUUUUU");
         const { data } = await this.updateFunction({ variables: { _id: this._id, field: this.field, value: this.prev } });
         return data;
     }

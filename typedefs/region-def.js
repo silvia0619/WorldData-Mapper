@@ -18,7 +18,7 @@ const typeDefs = gql `
 	}
 	extend type Mutation {
 		addRegion(region: RegionInput!): Region	
-		deleteRegion(_id: String!): Region
+		deleteRegion(_id: String!): Region	
 		updateRegionField(_id: String!, field: String!, value: String!): String
 		updateLandmarksField(_id: String!, value: [String]): [String]
 		sortRegions(_id: String!, criteria: String!): [Region]

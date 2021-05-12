@@ -68,7 +68,7 @@ const SelectMapScreen = (props) => {
 	};
 
 	const deleteRegion = async (_id) => {
-		DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
+		const { data } = await DeleteRegion({ variables: { _id: _id }, refetchQueries: [{ query: GET_DB_REGIONS }] });
 	};
 
 
