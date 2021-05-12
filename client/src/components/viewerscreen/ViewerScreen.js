@@ -1,9 +1,9 @@
-import ViewerContents 				from './ViewerContents'
+import ViewerContents 					from './ViewerContents'
 import * as mutations 					from '../../cache/mutations';
 import { GET_DB_REGIONS } 				from '../../cache/queries';
 import React, { useState } 				from 'react';
-import { useMutation } 		from '@apollo/client';
-import { useHistory } from 'react-router-dom';
+import { useMutation, useQuery } 		from '@apollo/client';
+import { useHistory } 					from 'react-router-dom';
 import { EditRegion_Transaction, EditLandmarks_Transaction } 			from '../../utils/jsTPS';
 
 const ViewerScreen = (props) => {
@@ -13,7 +13,36 @@ const ViewerScreen = (props) => {
     let selectedId = pathname.substring(8, pathname.length);
 	let allLandmarks = [];
 
-	for(let region of props.regions) {
+	let regions = [];
+	let RegionTableData = [];
+
+	const { loading, error, data, refetch } = useQuery(GET_DB_REGIONS);
+
+	if(loading) { console.log(loading, 'loading'); }
+	if(error) { console.log(error, 'error'); }
+	if(data) { 
+		// Assign regions 
+		for(let region of data.getAllRegions) {
+			if(region) {
+				regions.push(region)
+			}
+		}
+		for(let region of regions) {
+			if(region) {
+				RegionTableData.push({
+					_id: region._id,
+					parentId: region.parentId, 
+					name: region.name, 
+					capital: region.capital, 
+					leader: region.leader,
+					landmarks: region.landmarks,
+					subregions: region.subregions
+				});
+			}	
+		}
+	}
+
+	for(let region of regions) {
 		if(region._id == selectedId) {
 			selectedRegion = region;
 			for (let i = 0; i < selectedRegion.landmarks.length; i++){
@@ -22,7 +51,7 @@ const ViewerScreen = (props) => {
 		}
 	}
 	for (let i = 0; i < selectedRegion.subregions.length; i++) {
-		for (let region of props.regions) {
+		for (let region of regions) {
 			if (region._id == selectedRegion.subregions[i]){
 				for (let j = 0; j < region.landmarks.length; j++){
 					allLandmarks.push({_id: region._id, regionName: region.name, name: region.landmarks[j]})
@@ -33,7 +62,7 @@ const ViewerScreen = (props) => {
 	const mutationOptions = {
 		refetchQueries: [{ query: GET_DB_REGIONS }], 
 		awaitRefetchQueries: true,
-		onCompleted: () => props.rRefetch()
+		onCompleted: () => refetch()
 	}
 
 	const [canUndo, setCanUndo] = useState(props.tps.hasTransactionToUndo());
@@ -75,7 +104,7 @@ const ViewerScreen = (props) => {
 	};
 
 	return (
-		<ViewerContents selectedRegion={selectedRegion} RegionTableData={props.RegionTableData} 
+		<ViewerContents selectedRegion={selectedRegion} RegionTableData={RegionTableData} 
 			allLandmarks={allLandmarks} editRegion={editRegion} editLandmarks={editLandmarks}/>
 	);
 };

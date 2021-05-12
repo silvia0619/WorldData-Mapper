@@ -1,6 +1,6 @@
 import React, {useState}            from 'react';
-import { Link } from "react-router-dom";
-import { WRow, WCol, WButton } from 'wt-frontend';
+import { Link }                     from "react-router-dom";
+import { WRow, WCol, WButton }      from 'wt-frontend';
 
 const RegionInfo = (props) => {
     const theId = "/spreadsheet/" + props.selectedRegion.parentId;

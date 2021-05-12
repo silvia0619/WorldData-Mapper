@@ -1,7 +1,6 @@
 import SpreadsheetContents from './SpreadsheetContents'
 import * as mutations from '../../cache/mutations';
-import { GET_DB_REGIONS } from '../../cache/queries';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { WLayout, WLMain } from 'wt-frontend';
 import { useHistory } from 'react-router-dom';
@@ -10,41 +9,39 @@ import * as queries from '../../cache/queries';
 
 const SpreadsheetScreen = (props) => {
 	const auth = props.user === null ? false : true;
+	let allRegions = [];
 	let RegionTableData = [];
+
 	let pathname = useHistory().location.pathname;
 	let theParentId = pathname.substring(13, pathname.length);
-	let selectedMapName = "";
-	let seletedMapSubRegions = [];
 
-	const { loading, error, data, refetch} = useQuery(queries.GET_DB_REGIONS);
+	let selectedMapName = "";
+	let selectedMapSubRegions = [];
+
+	const { loading, error, data, refetch } = useQuery(queries.GET_DB_REGIONS);
 
 	if (loading) { console.log(loading, 'loading'); }
 	if (error) { console.log(error, 'error'); }
 	if (data) {
 		// Assign regions 
 		for (let region of data.getAllRegions) {
+			allRegions.push(region);
 			if (region._id == theParentId) {
 				selectedMapName = region.name;
-				seletedMapSubRegions = region.subregions;
+				selectedMapSubRegions = region.subregions;
 			}
 		}
-		for (let regionId of seletedMapSubRegions){
+		for (let regionId of selectedMapSubRegions) {
 			for (let region of data.getAllRegions) {
-				if (regionId == region._id){
-					RegionTableData.push({
-						_id: region._id,
-						name: region.name,
-						capital: region.capital,
-						leader: region.leader,
-						landmarks: region.landmarks
-					});
+				if (regionId == region._id) {
+					RegionTableData.push(region);
 				}
 			}
 		}
 	}
 
-	const mutationOptions = {
-		refetchQueries: [{ query: GET_DB_REGIONS }],
+	const mutationOptions =  {
+		refetchQueries: [{ query: queries.GET_DB_REGIONS }], 
 		awaitRefetchQueries: true,
 		// onCompleted: () => refetch()
 	}
@@ -110,9 +107,9 @@ const SpreadsheetScreen = (props) => {
 	return (
 		<WLayout>
 			<WLMain className="spreadsheet-main">
-				<SpreadsheetContents auth={auth} listIDs={RegionTableData} selectedMapName={selectedMapName}
+				<SpreadsheetContents auth={auth} selectedMapName={selectedMapName}
 					createNewRegion={createNewRegion} editRegion={editRegion} sortRegions={sortRegions}
-					deleteRegion={deleteRegion} undo={tpsUndo} redo={tpsRedo} />
+					deleteRegion={deleteRegion} undo={tpsUndo} redo={tpsRedo} activeRegions={RegionTableData}/>
 			</WLMain>
 		</WLayout>
 	);

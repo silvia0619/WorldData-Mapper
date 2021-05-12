@@ -82,16 +82,16 @@ module.exports = {
 				const updatedParent = await Region.updateOne({_id: theParentId}, {subregions: newSubregion});
 			}
 			const deleted = await Region.deleteOne({_id: objectId});
-			
-			if(deleted) return true;
-			else return false;
+			console.log("Is this not region? ",theRegion);
+			if(deleted) return theRegion;
+			// else return false;
 		},
 		/** 
 		 	@param 	 {object} args - a todolist objectID, field, and the update value
 			@returns {boolean} true on successful update, false on failure
 		**/
 		updateRegionField: async (_, args) => {
-			const { value, _id } = args;
+			const { value, field, _id } = args;
 			const objectId = new ObjectId(_id);
 			const updated = await Region.updateOne({_id: objectId}, {[field]: value});
 			if(updated) return value;

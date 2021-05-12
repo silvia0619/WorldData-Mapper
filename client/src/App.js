@@ -39,35 +39,6 @@ const App = () => {
 
 	const auth = user === null ? false : true;
 
-	let regions = [];
-	let RegionTableData = [];
-
-	const { loading: rLoading, error: rError, data: rData, refetch: rRefetch } = useQuery(queries.GET_DB_REGIONS);
-
-	if(rLoading) { console.log(rLoading, 'loading'); }
-	if(rError) { console.log(rError, 'error'); }
-	if(rData) { 
-		// Assign regions 
-		for(let region of rData.getAllRegions) {
-			if(region) {
-				regions.push(region)
-			}
-		}
-		for(let region of regions) {
-			if(region) {
-				RegionTableData.push({
-					_id: region._id,
-					parentId: region.parentId, 
-					name: region.name, 
-					capital: region.capital, 
-					leader: region.leader,
-					landmarks: region.landmarks,
-					subregions: region.subregions
-				});
-			}	
-		}
-	}
-
 	const [showLogin, toggleShowLogin] = useState(false);
 	const [showCreate, toggleShowCreate] = useState(false);
 	const [showUpdate, toggleShowUpdate] = useState(false);
@@ -95,14 +66,12 @@ const App = () => {
 					<WNavbar color="colored">
 						<ul>
 							<WNavItem>
-								<Logo className='logo' RegionTableData={RegionTableData} rRefetch={rRefetch}
-									pathname={pathname} />
+								<Logo className='logo' />
 							</WNavItem>
 						</ul>
 						<ul>
 							<WNavItem>
-								<Navigator RegionTableData={RegionTableData} rRefetch={rRefetch} regions={regions}
-									pathname={pathname} />
+								<Navigator pathname={pathname} />
 							</WNavItem>
 						</ul>
 						<ul>
@@ -126,24 +95,23 @@ const App = () => {
 						path="/select-map"
 						name="select-map"
 						render={() =>
-							<SelectMapScreen RegionTableData={RegionTableData} rRefetch={rRefetch}
-								fetchUser={refetch} user={user} refreshTps={refreshTps} />
+							<SelectMapScreen fetchUser={refetch} user={user} refreshTps={refreshTps} />
 						}
 					/>
 					<Route
 						path="/spreadsheet"
 						name="spreadsheet"
 						render={() =>
-							<SpreadsheetScreen regions={regions} rRefetch={rRefetch} tps={transactionStack}
-								fetchUser={refetch} user={user} refreshTps={refreshTps} />
+							<SpreadsheetScreen fetchUser={refetch} user={user} refreshTps={refreshTps} 
+								tps={transactionStack} />
 						}
 					/>
 					<Route
 						path="/viewer"
 						name="viewer"
 						render={() =>
-							<ViewerScreen regions={regions} rRefetch={rRefetch} RegionTableData={RegionTableData}
-								tps={transactionStack} fetchUser={refetch} user={user} refreshTps={refreshTps} />
+							<ViewerScreen fetchUser={refetch} user={user} refreshTps={refreshTps}
+								tps={transactionStack} />
 						}
 					/>
 					<Route />
@@ -151,7 +119,7 @@ const App = () => {
 					<Route path="/viewer/:id" children={<Child />} />
 				</Switch>
 				{showCreate && (<CreateAccount fetchUser={refetch} setShowCreate={setShowCreate} />)}
-				{showLogin && (<Login fetchUser={refetch} setShowLogin={setShowLogin} rRefetch={rRefetch}/>)}
+				{showLogin && (<Login fetchUser={refetch} setShowLogin={setShowLogin} />)}
 				{showUpdate && (<Update user={user} fetchUser={refetch} setShowUpdate={setShowUpdate} />)}
 			</WLayout>
 		</BrowserRouter>

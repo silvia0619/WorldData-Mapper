@@ -3,16 +3,16 @@ import SpreadsheetTableEntry from './SpreadsheetTableEntry';
 
 const SpreadsheetTableContents = (props) => {
     let tempID = 0
+    let entries = props.activeRegions ? props.activeRegions : null;
     return (
         <>
             {
-                props.listIDs &&
-                props.listIDs.map(entry => (
+                entries &&
+                entries.map(entry => (
                     <SpreadsheetTableEntry
                         id={tempID++} name={entry.name} _id={entry._id}
                         capital={entry.capital} leader={entry.leader} landmarks={entry.landmarks}
-                        updateRegionField={props.updateRegionField} deleteRegion={props.deleteRegion} 
-                        editRegion={props.editRegion}
+                        deleteRegion={props.deleteRegion} editRegion={props.editRegion}
                     />
                 ))
             }

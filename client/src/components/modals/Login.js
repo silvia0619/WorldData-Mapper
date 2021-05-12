@@ -1,8 +1,8 @@
-import React, { useState } 	from 'react';
-import { LOGIN } 			from '../../cache/mutations';
-import { useMutation }    	from '@apollo/client';
-
-import { useHistory } from 'react-router-dom';
+import React, { useState } 				from 'react';
+import { LOGIN } 						from '../../cache/mutations';
+import { GET_DB_REGIONS } 				from '../../cache/queries';
+import { useMutation, useQuery }    	from '@apollo/client';
+import { useHistory } 					from 'react-router-dom';
 
 import { WModal, WMHeader, WMMain, WMFooter, WButton, WInput, WCol, WRow } from 'wt-frontend';
 
@@ -14,6 +14,8 @@ const Login = (props) => {
 	const [Login] = useMutation(LOGIN);
 
 	let history = useHistory();
+
+	const { refetch } = useQuery(GET_DB_REGIONS);
 
 	const updateInput = (e) => {
 		const { name, value } = e.target;
@@ -30,7 +32,7 @@ const Login = (props) => {
 		}
 		if (data) {
 			props.fetchUser();
-			props.rRefetch();
+			refetch();
 			history.replace("/select-map");
 			toggleLoading(false)
 			props.setShowLogin(false)
