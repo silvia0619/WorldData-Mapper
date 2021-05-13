@@ -34,11 +34,13 @@ export class UpdateRegions_Transaction extends jsTPS_Transaction {
                 subregions: data.deleteRegion.subregions
             }
         }
+        // console.log(this.newRegion, "deleted region");
         return data;
     }
     // Since delete/add are opposites, flip matching opcode
     async undoTransaction() {
         let data;
+        // console.log(this.newRegion, "will add this region");
         this.opcode === 1 ? { data } = await this.deleteFunction({ variables: { _id: this._id } })
             : { data } = await this.addFunction({ variables: { region: this.newRegion } })
         if (this.opcode !== 1) { this._id = data.addRegion._id; }
@@ -80,20 +82,19 @@ export class EditRegion_Transaction extends jsTPS_Transaction {
 
 /*  Handles list name changes, or any other top level details of a todolist that may be added   */
 export class EditLandmarks_Transaction extends jsTPS_Transaction {
-    constructor(_id, field, prev, update, callback) {
+    constructor(_id, prev, update, callback) {
         super();
         this.prev = prev;
         this.update = update;
-        this.field = field;
         this._id = _id;
         this.updateFunction = callback;
     }
     async doTransaction() {
-        const { data } = await this.updateFunction({ variables: { _id: this._id, field: this.field, value: this.update } });
+        const { data } = await this.updateFunction({ variables: { _id: this._id, value: this.update } });
         return data;
     }
     async undoTransaction() {
-        const { data } = await this.updateFunction({ variables: { _id: this._id, field: this.field, value: this.prev } });
+        const { data } = await this.updateFunction({ variables: { _id: this._id, value: this.prev } });
         return data;
     }
 }

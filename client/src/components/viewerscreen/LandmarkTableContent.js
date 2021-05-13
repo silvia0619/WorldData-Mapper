@@ -23,7 +23,7 @@ const LandmarkTableContent = (props) => {
             {
                 props.landmarks &&
                 props.landmarks.map(entry => (
-                    <LandmarkTableEntry className="landmark-table-entry"
+                    <LandmarkTableEntry className="landmark-table-entry" editLandmarks={props.editLandmarks}
                         _id={entry._id} regionName={entry.regionName} name={entry.name}
                     />
                 ))

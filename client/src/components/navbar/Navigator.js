@@ -55,14 +55,14 @@ const Navigator = (props) => {
         }
     }
     while (theRegion && theRegion.parentId != "") {
-        console.log("inside of the while loop");
+        // console.log("inside of the while loop");
         for (let r of RegionTableData) {
             if (r._id == theRegion.parentId) {
-                console.log("There is a ancestor");
+                // console.log("There is a ancestor");
                 ancestor = ancestor ? r.name + " > " + ancestor : r.name;
-                console.log(ancestor, "the ancestor");
+                // console.log(ancestor, "the ancestor");
                 theRegion = r;
-                console.log(theRegion, "the Region");
+                // console.log(theRegion, "the Region");
             }
         }
     }

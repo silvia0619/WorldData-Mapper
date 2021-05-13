@@ -12,9 +12,7 @@ const ViewerScreen = (props) => {
     let pathname = useHistory().location.pathname;
     let selectedId = pathname.substring(8, pathname.length);
 	let allLandmarks = [];
-
 	let regions = [];
-	let RegionTableData = [];
 
 	const { loading, error, data, refetch } = useQuery(GET_DB_REGIONS);
 
@@ -27,21 +25,8 @@ const ViewerScreen = (props) => {
 				regions.push(region)
 			}
 		}
-		for(let region of regions) {
-			if(region) {
-				RegionTableData.push({
-					_id: region._id,
-					parentId: region.parentId, 
-					name: region.name, 
-					capital: region.capital, 
-					leader: region.leader,
-					landmarks: region.landmarks,
-					subregions: region.subregions
-				});
-			}	
-		}
 	}
-
+	//get the seleted region's landmarks
 	for(let region of regions) {
 		if(region._id == selectedId) {
 			selectedRegion = region;
@@ -50,6 +35,7 @@ const ViewerScreen = (props) => {
 			}
 		}
 	}
+	//get the region's subrigion's landmarks
 	for (let i = 0; i < selectedRegion.subregions.length; i++) {
 		for (let region of regions) {
 			if (region._id == selectedRegion.subregions[i]){
@@ -92,19 +78,42 @@ const ViewerScreen = (props) => {
 		props.tps.addTransaction(transaction);
 		tpsRedo();
 	};
+
 	//opcode 1: add, 2: delete, 3: edit
 	const editLandmarks = async (_id, opcode, value, prev) => {
+		//add
 		if (opcode === 1) {
 			let newLandmarks = Object.assign([], selectedRegion.landmarks);
 			newLandmarks.push(value);
-			var transaction = new EditLandmarks_Transaction(selectedId, "landmarks", selectedRegion.landmarks, newLandmarks, UpdateLandmarksField);
+			var transaction = new EditLandmarks_Transaction(selectedId, selectedRegion.landmarks, newLandmarks, UpdateLandmarksField);
+		}
+		//delete, edit
+		else {
+			var theRegion;
+			for (let region of regions) {
+				if (region._id == _id) {
+					theRegion = region;
+				}
+			}
+			let newLandmarks = theRegion ? Object.assign([], theRegion.landmarks):[];
+			//delete
+			if (opcode === 2) {
+				newLandmarks = newLandmarks.filter(function(ele){ return ele != value; });
+				var transaction = new EditLandmarks_Transaction(_id, theRegion.landmarks, newLandmarks, UpdateLandmarksField);
+			}
+			else if (opcode === 3) {
+				newLandmarks = newLandmarks.map(function(ele){ 
+					if (ele == prev) return value; });
+				var transaction = new EditLandmarks_Transaction(_id, theRegion.landmarks, newLandmarks, UpdateLandmarksField);
+		
+			}
 		}
 		props.tps.addTransaction(transaction);
 		tpsRedo();
 	};
 
 	return (
-		<ViewerContents selectedRegion={selectedRegion} RegionTableData={RegionTableData} 
+		<ViewerContents selectedRegion={selectedRegion} regions={regions} undo={tpsUndo} redo={tpsRedo} 
 			allLandmarks={allLandmarks} editRegion={editRegion} editLandmarks={editLandmarks}/>
 	);
 };

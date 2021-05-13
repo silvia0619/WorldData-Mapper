@@ -101,7 +101,6 @@ const SpreadsheetScreen = (props) => {
 		let oldValue = [...selectedMapSubRegions];
 		let newValue = [];
 		let newValueRegion = [...RegionTableData];
-		console.log(newValueRegion, "newValueRegion?????????????????????????????");
 		switch(criteria) {
 			case 'name':
 				newValueRegion.sort((a, b) => a.name.localeCompare(b.name));
@@ -117,6 +116,9 @@ const SpreadsheetScreen = (props) => {
 		}
 		for (let i = 0; i < newValueRegion.length; i++) {
 			newValue.push(newValueRegion[i]._id);
+		}
+		if (JSON.stringify(oldValue) === JSON.stringify(newValue)) {
+			newValue.reverse();
 		}
 		let transaction = new SortRegions_Transaction(theParentId, oldValue, newValue, SortRegions);
 		props.tps.addTransaction(transaction);

@@ -9,13 +9,13 @@ const RegionInfo = (props) => {
     let parentsOptions = [];
     const [editingParentRegion, toggleParentEdit] = useState(false);
 
-    for (let region of props.RegionTableData) {
+    for (let region of props.regions) {
         if (region._id == props.selectedRegion.parentId) {
             parentRName = region.name;
             grandParentRId = region.parentId;
         }
     }
-    for (let region of props.RegionTableData) {
+    for (let region of props.regions) {
         if (region.parentId == grandParentRId) {
             parentsOptions.push(region);
         }
@@ -25,7 +25,7 @@ const RegionInfo = (props) => {
         toggleParentEdit(false);
         let newParent = "";
         const newParentName = e.target.value ? e.target.value : false;
-        for (let region of props.RegionTableData) {
+        for (let region of props.regions) {
             if (region.name == newParentName) {
                 newParent = region._id;
             }
@@ -41,9 +41,9 @@ const RegionInfo = (props) => {
             <div className="modal-spacer">&nbsp;</div>
 
             <WRow>
-                <WCol size="1"><WButton className="add-region-icon" wType="texted" style={{color: "white"}}>
+                <WCol size="1"><WButton className="add-region-icon" wType="texted" onClick={props.undo} style={{color: "white"}}>
                     <i class="fas fa-arrow-left"></i></WButton></WCol>
-                <WCol size="1"><WButton className="add-region-icon" wType="texted" style={{color: "white"}}>
+                <WCol size="1"><WButton className="add-region-icon" wType="texted" onClick={props.redo} style={{color: "white"}}>
                     <i class="fas fa-arrow-right"></i></WButton></WCol>
             </WRow>
 
