@@ -98,7 +98,27 @@ const SpreadsheetScreen = (props) => {
 	};
 
 	const sortRegions = (criteria) => {
-		let transaction = new SortRegions_Transaction(theParentId, criteria, SortRegions);
+		let oldValue = [...selectedMapSubRegions];
+		let newValue = [];
+		let newValueRegion = [...RegionTableData];
+		console.log(newValueRegion, "newValueRegion?????????????????????????????");
+		switch(criteria) {
+			case 'name':
+				newValueRegion.sort((a, b) => a.name.localeCompare(b.name));
+				break;
+			case 'capital':
+				newValueRegion.sort((a, b) => a.capital.localeCompare(b.capital));
+				break;
+			case 'leader':
+				newValueRegion.sort((a, b) => a.leader.localeCompare(b.leader));
+				break;
+			default:
+				return oldValue;
+		}
+		for (let i = 0; i < newValueRegion.length; i++) {
+			newValue.push(newValueRegion[i]._id);
+		}
+		let transaction = new SortRegions_Transaction(theParentId, oldValue, newValue, SortRegions);
 		props.tps.addTransaction(transaction);
 		tpsRedo();
 	}

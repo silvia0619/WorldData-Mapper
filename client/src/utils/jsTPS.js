@@ -99,22 +99,23 @@ export class EditLandmarks_Transaction extends jsTPS_Transaction {
 }
 
 export class SortRegions_Transaction extends jsTPS_Transaction {
-    constructor(parentId, nextSortRule, callback) {
+    constructor(parentId, oldValue, newValue, callback) {
         super();
         this.parentId = parentId;
-        this.nextSortRule = nextSortRule;
+        this.oldValue = oldValue;
+        this.newValue = newValue;
         this.updateFunction = callback;
     }
     async doTransaction() {
-        const { data } = await this.updateFunction({ variables: { _id: this.parentId, criteria: this.nextSortRule } });
+        const { data } = await this.updateFunction({ variables: { _id: this.parentId, value: this.newValue } });
         if (data) {
-            console.log(data)
+            console.log("the data",data)
             return data;
         }
     }
 
     async undoTransaction() {
-        const { data } = await this.updateFunction({ variables: { _id: this.listID, criteria: this.prevSortRule } });
+        const { data } = await this.updateFunction({ variables: { _id: this.parentId, value: this.oldValue } });
         if (data) {
             console.log(data)
             return data;

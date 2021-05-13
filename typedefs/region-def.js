@@ -21,7 +21,7 @@ const typeDefs = gql `
 		deleteRegion(_id: String!): Region	
 		updateRegionField(_id: String!, field: String!, value: String!): String
 		updateLandmarksField(_id: String!, value: [String]): [String]
-		sortRegions(_id: String!, criteria: String!): [Region]
+		sortRegions(_id: String!, value: [String]): [String]
 	}
 	input FieldInput {
 		_id: String

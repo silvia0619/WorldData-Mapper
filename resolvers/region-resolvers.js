@@ -111,35 +111,11 @@ module.exports = {
 		},
 
 		sortRegions: async (_, args) => {
-			const { _id, criteria } = args;
+			const { _id, value } = args;
 			const objectId = new ObjectId(_id);
-			const found = await Region.findOne({_id: objectId});
-			let sortedRegionsId = found.subregions;
-			let sortedRegions = [];
-			for(let i = 0; i < sortedRegionsId.length; i++){
-				const rId = new ObjectId(sortedRegionsId[i]);
-				const theFound = await Region.findOne({_id: rId});
-				theFound? sortedRegions.push(theFound):"";
-			}
-			switch(criteria) {
-				case 'name':
-					sortedRegions.sort((a, b) => a.name.localeCompare(b.name));
-					break;
-				case 'capital':
-					sortedRegions.sort((a, b) => a.capital.localeCompare(b.capital));
-					break;
-				case 'leader':
-					sortedRegions.sort((a, b) => a.leader.localeCompare(b.leader));
-					break;
-				default:
-					return found.items;
-			}
-			sortedRegionsId = [];
-			for(let i = 0; i < sortedRegions.length; i++){
-				sortedRegionsId.push(sortedRegions[i]._id);
-			}
-			const updated = await Region.updateOne({_id: objectId}, { subregions: sortedRegionsId })
-			if(updated) return (sortedRegions);
+			const updated = await Region.updateOne({_id: objectId}, { subregions: value })
+			if(updated) return (value);
+			else return [];
 		}
 	}
 }

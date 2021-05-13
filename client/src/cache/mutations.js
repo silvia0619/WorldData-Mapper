@@ -74,16 +74,7 @@ export const UPDATE_LANDMARKS_FIELD = gql`
 `;
 
 export const SORT_REGIONS = gql`
-	mutation SortRegions($_id: String!, $criteria: String!) {
-		sortRegions(_id: $_id, criteria: $criteria){
-			_id
-			parentId
-			name
-			owner
-			capital
-			leader
-			landmarks
-			subregions
-		}
+	mutation SortRegions($_id: String!, $value: [String]) {
+		sortRegions(_id: $_id, value: $value)
 	}
 `;
