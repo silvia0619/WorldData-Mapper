@@ -31,8 +31,8 @@ const SelectMapTableEntry = (props) => {
         <WRow>
             <WCol size="10" style={{paddingLeft: 15 + 'px'}}>
                 {
-                    editing ?   <WInput className="list-item-edit" inputClass="list-item-edit-input"
-                                    onKeyDown={(e) => {if(e.keyCode === 13) handleSubmit(e)}}
+                    editing ?   <WInput className="map-edit" inputClass="map-edit-input"
+                                    onKeyDown={(e) => {if(e.keyCode === 13) handleSubmit(e)}} wType="lined"
                                     name='name' onBlur={handleSubmit} autoFocus={true} defaultValue={props.name} 
                                 />
                             :<Link to={theId} style={{ textDecoration: 'none', color: 'black', fontSize: '25px'}}>{props.name}</Link>   

@@ -2,6 +2,7 @@ import React, { useState }  from 'react';
 import { WInput, WButton } from 'wt-frontend';
 import { Link } from "react-router-dom";
 import Delete from '../modals/Delete';
+import Flag from '../The World/Flag'
 
 const SpreadsheetTableEntry = (props) => {
     const [editingName, toggleNameEdit] = useState(false);
@@ -56,17 +57,17 @@ const SpreadsheetTableEntry = (props) => {
     return (
         <tr className="spreadsheet-entry">
             <td>
-                <WButton className="remove-region-icon" onClick={setShowDelete} wType="texted">
+                <WButton className="delete-edit-region-button" onClick={setShowDelete} wType="texted" style={{color: "red"}}>
                 <i class="fas fa-times"></i></WButton>
                 {showDelete && (<Delete setShowDelete={setShowDelete} handleDeleting={handleDeleting}/>)}
-                <WButton className="remove-region-icon" onClick={() => toggleNameEdit(!editingName)} wType="texted">
+                <WButton onClick={() => toggleNameEdit(!editingName)} wType="texted">
                 <i class="fas fa-pen"></i></WButton>
                 {
                     editingName || name === ''
                         ? <WInput
                             className='table-input' onBlur={handleNameEdit}
                             onKeyDown={(e) => {if(e.keyCode === 13) handleNameEdit(e)}}
-                            autoFocus={true} defaultValue={name} type='text'
+                            autoFocus={true} defaultValue={name} type='text' wType="lined"
                             inputClass="table-input-class"
                         />
                         : <Link style={{textDecoration: 'none', color: "#4D84A3"}} to={theId}>{name}</Link>
@@ -78,7 +79,7 @@ const SpreadsheetTableEntry = (props) => {
                         ? <WInput
                             className='table-input' onBlur={handleCapitalEdit}
                             onKeyDown={(e) => {if(e.keyCode === 13) handleCapitalEdit(e)}}
-                            autoFocus={true} defaultValue={capital} type='text'
+                            autoFocus={true} defaultValue={capital} type='text' wType="lined"
                             inputClass="table-input-class"
                         />
                         : <div className="table-text"
@@ -93,7 +94,7 @@ const SpreadsheetTableEntry = (props) => {
                         ? <WInput
                             className='table-input' onBlur={handleLeaderEdit}
                             onKeyDown={(e) => {if(e.keyCode === 13) handleLeaderEdit(e)}}
-                            autoFocus={true} defaultValue={leader} type='text'
+                            autoFocus={true} defaultValue={leader} type='text' wType="lined"
                             inputClass="table-input-class"
                         />
                         : <div className="table-text"
@@ -102,7 +103,9 @@ const SpreadsheetTableEntry = (props) => {
                         </div>
                 }
             </td>
-            <td><img className='welcome-img' src="https://dummyimage.com/40x30/000/fff"/></td>
+            {/* <td><img className='welcome-img' src="https://dummyimage.com/40x30/000/fff"/></td> */}
+            {/* <td><Flag>{Flag({name})}</Flag></td> */}
+            <td><Flag>{Flag("Togo")}</Flag></td>
             <td>
                 <Link style={{textDecoration: 'none', color: "#4D84A3"}} to={selectedRegionId}>{landmarks}</Link></td>
         </tr>

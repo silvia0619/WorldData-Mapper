@@ -78,17 +78,17 @@ html {
 
 .spreadsheet-header {
     box-sizing: border-box;
+    height: 10px;
 }
 
 .spreadsheet-header-section {
     height: 100%;
     padding: 0;
-    padding-top: 12px;
-    padding-bottom: 12px;
 }
 
 .spreadsheet-entry {
     width: 100%;
+    height: 10px;
 }
 
 .button-group {
@@ -170,18 +170,12 @@ html {
     overflow-y: scroll;
 }
 
-.list-item-edit, .table-input, .table-select {
-    // width: 100%;
-}
-
-.list-item-edit-input {
-    padding: 23px 24px 24px 24px !important;
-}
-
 .table-input, .table-select {
-    // height: 100%;
+    height: 100%;
+    width: 80%;
     display: flex;
     align-items: center;
+    
 }
 
 .table-input-class {
@@ -198,20 +192,18 @@ html {
     width: 480px;
 }
 
-.map-table-icons {
-    align-items: right;
-}
-
 table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    height: 70%;
 }
   
 td, th {
     border: 1px solid black;
     text-align: center;
-    padding: 8px;
+    // padding: 1px;
+    // height: 70px;
 }
 
 .spreadsheet-main {

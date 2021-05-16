@@ -129,9 +129,10 @@ const SpreadsheetScreen = (props) => {
 	return (
 		<WLayout>
 			<WLMain className="spreadsheet-main">
-				<SpreadsheetContents auth={auth} selectedMapName={selectedMapName}
+				<SpreadsheetContents auth={auth} selectedMapName={selectedMapName} theParentId={theParentId}
 					createNewRegion={createNewRegion} editRegion={editRegion} sortRegions={sortRegions}
-					deleteRegion={deleteRegion} undo={tpsUndo} redo={tpsRedo} activeRegions={RegionTableData}/>
+					deleteRegion={deleteRegion} undo={tpsUndo} redo={tpsRedo} 
+					canUndo={canUndo} canRedo={canRedo} activeRegions={RegionTableData}/>
 			</WLMain>
 		</WLayout>
 	);

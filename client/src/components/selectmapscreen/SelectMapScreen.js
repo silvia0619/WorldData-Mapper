@@ -75,7 +75,7 @@ const SelectMapScreen = (props) => {
 	return (
 		<WLayout wLayout="lside-rside">
 			<WLMain>
-				<SelectMapContents auth={auth} listIDs={MapTableData} createNewRegion={createNewRegion} 
+				<SelectMapContents listIDs={MapTableData} createNewRegion={createNewRegion} 
 									updateRegionField={updateRegionField} deleteRegion={deleteRegion}/>
 			</WLMain>
 		</WLayout>

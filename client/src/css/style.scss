@@ -91,12 +91,6 @@ html, body {
 
 }
 
-
-
-.list-item-edit-input, .table-input {
-    font-size: 1.125rem !important;
-}
-
 .logo {
 	color: $primary-color;
     font-size: 1.5rem;
@@ -152,7 +146,6 @@ html, body {
 }
 
 .spreadsheet-entry {
-    width: 100%;
     background-color: rgb(195, 195, 195);
 }
 
@@ -161,9 +154,9 @@ html, body {
     background-color:rgb(208, 47, 47);
 }
 
-.spreadsheet-header-section {
-    font-size: 1rem;
-    color: $text-color;
+.table-input-section {
+    // font-size: 1rem;
+    // color: $text-color;
 }
 
 .spreadsheet-header-section:hover {
@@ -173,16 +166,22 @@ html, body {
 }
 
 .table-input {
-    /*background-color: var(--deep-blue-lighter);
     border-top: none;
     border-left: none;
     border-right: none;
-    border-bottom: 1px solid;
     margin: 0;
     padding:0;
-    font-family: 'Roboto';
-    font-size: 14px;
-    color: var(--light-gray);*/
+}
+
+.table-header-button {
+    transition: 0.1s ease-in-out;
+    color: var(--light-gray);
+}
+
+.table-header-button-disabled {
+    transition: 0.1s ease-in-out;
+    color: var(--warm-black);
+    cursor: default;
 }
 
 .table-select {
@@ -192,6 +191,11 @@ html, body {
     border: none;
     background-color: var(--deep-blue-lighter);
     color: var(--light-gray);
+}
+
+.delete-edit-region-button {
+    float: left;
+    padding: 0.3em;
 }
 
 .modal-header {
@@ -246,8 +250,10 @@ html, body {
 .map-table {
     background-color: pink;
     border-radius: 0px;
-    width: 370px;
-    height: 408px;
+    width: 100%;
+    height: 100%;
+    // width: 370px;
+    // height: 408px;
 }
 
 .map-header-red {
@@ -258,7 +264,6 @@ html, body {
 
 .map-header-black {
     color: white;
-    width: 740px;
     height: 50px;
     text-align: center;
     background-color: black;
@@ -266,7 +271,8 @@ html, body {
 
 .create-map-button {
     text-align: center;
-    width: 370px;
+    width: 100%;
+    // width: 370px;
     background-color: #971716;
     color: white;
 }
