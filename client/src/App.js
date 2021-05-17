@@ -19,7 +19,6 @@ import { WLayout, WLHeader, WNavbar, WNavItem } from 'wt-frontend';
 
 const App = () => {
 	let user = null;
-    let transactionStack = new jsTPS();
 	let refreshTps = false;
     const { loading, error, data, refetch } = useQuery(queries.GET_DB_USER);
 	let history = useHistory();
@@ -27,7 +26,7 @@ const App = () => {
 	if (history) {
 		pathname = history.location.pathname;
 	}
-
+	
     if(error) { console.log(error); }
 	if(loading) { console.log(loading); }
 	if(data) { 
@@ -88,7 +87,7 @@ const App = () => {
 						path="/welcome"
 						name="welcome"
 						render={() =>
-							<WelcomeScreen fetchUser={refetch} user={user} refreshTps={refreshTps} />
+							<WelcomeScreen fetchUser={refetch} user={user} />
 						}
 					/>
 					<Route
@@ -103,7 +102,7 @@ const App = () => {
 						name="spreadsheet"
 						render={() =>
 							<SpreadsheetScreen fetchUser={refetch} user={user} refreshTps={refreshTps} 
-								tps={transactionStack} />
+								tps={new jsTPS()} />
 						}
 					/>
 					<Route
@@ -111,7 +110,7 @@ const App = () => {
 						name="viewer"
 						render={() =>
 							<ViewerScreen fetchUser={refetch} user={user} refreshTps={refreshTps}
-								tps={transactionStack} />
+								tps={new jsTPS()} />
 						}
 					/>
 					<Route />

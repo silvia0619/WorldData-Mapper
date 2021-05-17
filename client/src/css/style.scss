@@ -193,9 +193,16 @@ html, body {
     color: var(--light-gray);
 }
 
-.delete-edit-region-button {
+.delete-region-button {
     float: left;
     padding: 0.3em;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.edit-region-button {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .modal-header {
@@ -279,9 +286,15 @@ html, body {
 
 .region-info {
     color: white;
+    font-size: 25px;
 }
 
 .landmark-table {
     color: rgb(195, 195, 195);
     background-color: black;
+}
+
+.ancestor-row {
+    width: 40%;
+    font-size: 5px;
 }

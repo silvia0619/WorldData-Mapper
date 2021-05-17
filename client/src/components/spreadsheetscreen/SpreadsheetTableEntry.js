@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useState } from 'react';
 import { WInput, WButton } from 'wt-frontend';
 import { Link } from "react-router-dom";
 import Delete from '../modals/Delete';
@@ -21,7 +21,7 @@ const SpreadsheetTableEntry = (props) => {
         toggleNameEdit(false);
         const newName = e.target.value ? e.target.value : 'No Name';
         const prevName = name;
-        if(newName !== prevName) {
+        if (newName !== prevName) {
             props.editRegion(props._id, 'name', newName, prevName);
         }
     };
@@ -30,7 +30,7 @@ const SpreadsheetTableEntry = (props) => {
         toggleCapitalEdit(false);
         const newCapital = e.target.value ? e.target.value : 'No Capital';
         const prevCapital = capital;
-        if(newCapital !== prevCapital) {
+        if (newCapital !== prevCapital) {
             props.editRegion(props._id, 'capital', newCapital, prevCapital);
         }
     };
@@ -39,7 +39,7 @@ const SpreadsheetTableEntry = (props) => {
         toggleLeaderEdit(false);
         const newLeader = e.target.value ? e.target.value : 'No Leader';
         const prevLeader = leader;
-        if(newLeader !== prevLeader) {
+        if (newLeader !== prevLeader) {
             props.editRegion(props._id, 'leader', newLeader, prevLeader);
         }
     };
@@ -51,26 +51,29 @@ const SpreadsheetTableEntry = (props) => {
     const [showDelete, toggleShowDelete] = useState(false);
 
     const setShowDelete = () => {
-		toggleShowDelete(!showDelete);
-	};
+        toggleShowDelete(!showDelete);
+    };
 
     return (
         <tr className="spreadsheet-entry">
             <td>
-                <WButton className="delete-edit-region-button" onClick={setShowDelete} wType="texted" style={{color: "red"}}>
-                <i class="fas fa-times"></i></WButton>
-                {showDelete && (<Delete setShowDelete={setShowDelete} handleDeleting={handleDeleting}/>)}
-                <WButton onClick={() => toggleNameEdit(!editingName)} wType="texted">
-                <i class="fas fa-pen"></i></WButton>
+                {showDelete && (<Delete setShowDelete={setShowDelete} handleDeleting={handleDeleting} />)}
                 {
                     editingName || name === ''
                         ? <WInput
                             className='table-input' onBlur={handleNameEdit}
-                            onKeyDown={(e) => {if(e.keyCode === 13) handleNameEdit(e)}}
+                            onKeyDown={(e) => { if (e.keyCode === 13) handleNameEdit(e) }}
                             autoFocus={true} defaultValue={name} type='text' wType="lined"
                             inputClass="table-input-class"
                         />
-                        : <Link style={{textDecoration: 'none', color: "#4D84A3"}} to={theId}>{name}</Link>
+                        : <div>
+                            <WButton className="delete-region-button" onClick={setShowDelete} wType="texted" style={{ color: "red" }}>
+                                <i class="fas fa-times"></i></WButton>
+                            <WButton className="edit-region-button" onClick={() => toggleNameEdit(!editingName)} wType="texted">
+                                <i class="fas fa-pen"></i></WButton>
+                            <Link style={{ textDecoration: 'none', color: "#4D84A3" }} to={theId}>{name}</Link>
+
+                        </div>
                 }
             </td>
             <td>
@@ -78,7 +81,7 @@ const SpreadsheetTableEntry = (props) => {
                     editingCapital || capital === ''
                         ? <WInput
                             className='table-input' onBlur={handleCapitalEdit}
-                            onKeyDown={(e) => {if(e.keyCode === 13) handleCapitalEdit(e)}}
+                            onKeyDown={(e) => { if (e.keyCode === 13) handleCapitalEdit(e) }}
                             autoFocus={true} defaultValue={capital} type='text' wType="lined"
                             inputClass="table-input-class"
                         />
@@ -93,7 +96,7 @@ const SpreadsheetTableEntry = (props) => {
                     editingLeader || leader === ''
                         ? <WInput
                             className='table-input' onBlur={handleLeaderEdit}
-                            onKeyDown={(e) => {if(e.keyCode === 13) handleLeaderEdit(e)}}
+                            onKeyDown={(e) => { if (e.keyCode === 13) handleLeaderEdit(e) }}
                             autoFocus={true} defaultValue={leader} type='text' wType="lined"
                             inputClass="table-input-class"
                         />
@@ -107,7 +110,7 @@ const SpreadsheetTableEntry = (props) => {
             {/* <td><Flag>{Flag({name})}</Flag></td> */}
             <td><Flag>{Flag("Togo")}</Flag></td>
             <td>
-                <Link style={{textDecoration: 'none', color: "#4D84A3"}} to={selectedRegionId}>{landmarks}</Link></td>
+                <Link style={{ textDecoration: 'none', color: "#4D84A3" }} to={selectedRegionId}>{landmarks}</Link></td>
         </tr>
     );
 };

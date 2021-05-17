@@ -23,19 +23,17 @@ const LandmarkTableContent = (props) => {
             {
                 props.landmarks &&
                 props.landmarks.map(entry => (
-                    <LandmarkTableEntry className="landmark-table-entry" editLandmarks={props.editLandmarks}
-                        _id={entry._id} regionName={entry.regionName} name={entry.name}
-                    />
+                    <LandmarkTableEntry editLandmarks={props.editLandmarks} _id={entry._id} regionName={entry.regionName} name={entry.name} />
                 ))
             }
-            <WRow>
+            <WRow className="add-landmark">
                 <WCol size="1">
                     <WButton className="add-region-icon" onClick={createNewLandmark} wType="texted" style={{color: "green"}}>
                     <i class="fas fa-plus"></i></WButton>
                 </WCol>
                 <WCol size="10">
                     <WInput className="modal-input" onBlur={updateInput} name="name" labelAnimation="up"
-                    barAnimation="solid"  wType="outlined" inputType="text"/>
+                    barAnimation="solid"  wType="filled" inputType="text"/>
                 </WCol>
             </WRow>
             
