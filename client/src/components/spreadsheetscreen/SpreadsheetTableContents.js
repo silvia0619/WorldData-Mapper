@@ -5,7 +5,7 @@ const SpreadsheetTableContents = (props) => {
     let tempID = 0
     let entries = props.activeRegions ? props.activeRegions : null;
     return (
-        <>
+        <tbody>
             {
                 entries &&
                 entries.map(entry => (
@@ -16,7 +16,7 @@ const SpreadsheetTableContents = (props) => {
                     />
                 ))
             }
-        </>
+        </tbody>
     );
 };
 

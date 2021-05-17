@@ -30,6 +30,15 @@ const Navigator = (props) => {
         refetch();
     });
 
+    // const history = useHistory()
+
+    // useEffect(() => {
+    //     return history.listen((location) => {
+    //         refetch();
+    //         console.log(`You changed the page to: ${location.pathname}`)
+    //     })
+    // }, [history])
+
     if (pathname.substring(0, 3) == "/sp") {
         theLocation = "sp";
         theId = pathname.substring(13, pathname.length);

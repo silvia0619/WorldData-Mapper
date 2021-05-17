@@ -1,6 +1,7 @@
 import React, {useState}            from 'react';
 import { Link }                     from "react-router-dom";
 import { WRow, WCol, WButton }      from 'wt-frontend';
+import Flag from '../The World/Flag'
 
 const RegionInfo = (props) => {
     const theId = "/spreadsheet/" + props.selectedRegion.parentId;
@@ -63,8 +64,8 @@ const RegionInfo = (props) => {
                 <WCol size="1"><WButton {...redoOptions}>
                     <i class="fas fa-arrow-right"></i></WButton></WCol>
             </WRow>
-
-            <img className='welcome-img' src="https://dummyimage.com/370x250/000/fff"/>
+            <Flag className='welcome-img' name={props.selectedRegion.name} from={"vi"}></Flag>
+            {/* <img className='welcome-img' src="https://dummyimage.com/370x250/000/fff"/> */}
             <div className="modal-spacer">&nbsp;</div>
             <WRow>
                 <WCol size="12">Region Name: &nbsp; {props.selectedRegion.name}</WCol>

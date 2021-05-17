@@ -37,15 +37,18 @@ const ViewerScreen = (props) => {
 		}
 	}
 	//get the region's subrigion's landmarks
-	for (let i = 0; i < selectedRegion.subregions.length; i++) {
-		for (let region of regions) {
-			if (region._id == selectedRegion.subregions[i]) {
-				for (let j = 0; j < region.landmarks.length; j++) {
-					allLandmarks.push({ _id: region._id, regionName: region.name, name: region.landmarks[j] })
+	if (selectedRegion) {
+		for (let i = 0; i < selectedRegion.subregions.length; i++) {
+			for (let region of regions) {
+				if (region._id == selectedRegion.subregions[i]) {
+					for (let j = 0; j < region.landmarks.length; j++) {
+						allLandmarks.push({ _id: region._id, regionName: region.name, name: region.landmarks[j] })
+					}
 				}
 			}
 		}
 	}
+	
 	const mutationOptions = {
 		refetchQueries: [{ query: GET_DB_REGIONS }],
 		awaitRefetchQueries: true,

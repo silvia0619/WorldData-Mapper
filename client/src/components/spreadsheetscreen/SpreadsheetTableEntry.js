@@ -72,7 +72,6 @@ const SpreadsheetTableEntry = (props) => {
                             <WButton className="edit-region-button" onClick={() => toggleNameEdit(!editingName)} wType="texted">
                                 <i class="fas fa-pen"></i></WButton>
                             <Link style={{ textDecoration: 'none', color: "#4D84A3" }} to={theId}>{name}</Link>
-
                         </div>
                 }
             </td>
@@ -106,9 +105,7 @@ const SpreadsheetTableEntry = (props) => {
                         </div>
                 }
             </td>
-            {/* <td><img className='welcome-img' src="https://dummyimage.com/40x30/000/fff"/></td> */}
-            {/* <td><Flag>{Flag({name})}</Flag></td> */}
-            <td><Flag>{Flag("Togo")}</Flag></td>
+            <td><Flag name={name} from={"sp"}></Flag></td>
             <td>
                 <Link style={{ textDecoration: 'none', color: "#4D84A3" }} to={selectedRegionId}>{landmarks}</Link></td>
         </tr>
