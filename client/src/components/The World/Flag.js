@@ -3,8 +3,8 @@ import countryFlags from './index';
 
 const Flag = (countryCode) => {
   const theFlagName = countryFlags[countryCode.toString()];
-  console.log(countryCode.toString(), "the Country code");
-  console.log(theFlagName, "theFlagName");
+  // console.log(countryCode.toString(), "the Country code");
+  // console.log(theFlagName, "theFlagName");
   return (
     theFlagName? 
     <div>

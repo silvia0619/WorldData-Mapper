@@ -10,7 +10,7 @@ const obj = {};
 Africa.keys().forEach((key) => {
     const countryCode = key.split('./').pop() // remove the first 2 characters
         .substring(0, key.length - 11); // remove the file extension
-    console.log("the countryCode: ", countryCode, ";");
+    // console.log("the countryCode: ", countryCode, ";");
     obj[countryCode] = Africa(key);
 });
 export default obj;

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { WRow, WCol } from 'wt-frontend';
+import React, { useEffect } from 'react';
+import { WRow } from 'wt-frontend';
 import { useHistory, Link } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client';
@@ -10,6 +10,7 @@ const Navigator = (props) => {
     let theId = "";
     let ancestor = [];
     let regions = [];
+    let theLocation = "";
 
     const { loading, error, data, refetch } = useQuery(queries.GET_DB_REGIONS);
 
@@ -30,15 +31,13 @@ const Navigator = (props) => {
     });
 
     if (pathname.substring(0, 3) == "/sp") {
+        theLocation = "sp";
         theId = pathname.substring(13, pathname.length);
-        console.log("theId: spreadsheet", theId);
     }
     if (pathname.substring(0, 3) == "/vi") {
+        theLocation = "vi";
         theId = pathname.substring(8, pathname.length);
-        console.log("theId: viewer", theId);
     }
-    const [canGoPrev, setCanGoPrev] = useState(false);
-    const [canGoNext, setCanGoNext] = useState(false);
 
     let theRegion;
     for (let region of regions) {
@@ -46,7 +45,6 @@ const Navigator = (props) => {
             theRegion = region;
         }
     }
-
     while (theRegion && theRegion.parentId != "") {
         for (let r of regions) {
             if (r._id == theRegion.parentId) {
@@ -55,47 +53,25 @@ const Navigator = (props) => {
             }
         }
     }
-
     let prevSibling = "";
     let nextSibling = "";
-    for (let region of regions) {
-        if (theRegion && region._id == theRegion._id) {
-            console.log(region.subregions);
-            if (region.subregions.length > 1) {
-                for (let i = 0; i < region.subregions.length; i++) {
-                    if (region.subregions[i] == theId) {
-                        if (i == 0) {
-                            setCanGoNext(true);
-                            nextSibling = region.subregions[i + 1];
-                        }
-                        else if (i == region.subregions.length - 1) {
-                            setCanGoPrev(true);
-                            prevSibling = region.subregions[i - 1];
-                        }
-                        else {
-                            console.log("case else");
-                            setCanGoPrev(true);
-                            setCanGoNext(true);
-                            prevSibling = region.subregions[i - 1];
-                            nextSibling = region.subregions[i + 1];
-                        }
-                    }
+    let theSubRegions = theRegion ? theRegion.subregions : [];
+    if (theSubRegions.length > 1) {
+        for (let i = 0; i < theSubRegions.length; i++) {
+            if (theSubRegions[i] == theId) {
+                if (i == 0) {
+                    nextSibling = theSubRegions[i + 1];
+                }
+                else if (i == theSubRegions.length - 1) {
+                    prevSibling = theSubRegions[i - 1];
+                }
+                else {
+                    prevSibling = theSubRegions[i - 1];
+                    nextSibling = theSubRegions[i + 1];
                 }
             }
         }
     }
-    // const clickDisabled = () => { };
-
-    // const goprevOptions = {
-    //     className: !canGoPrev ? 'table-header-button-disabled' : 'table-header-button',
-    //     to: !canGoPrev   ? clickDisabled : "/viewer/" + prevSibling
-    // }
-
-    // const gonextOptions = {
-    //     className: !canGoNext ? 'table-header-button-disabled' : 'table-header-button',
-    //     to: !canGoNext   ? clickDisabled : "/viewer/" + nextSibling
-    // }
-
 
     return (
         <>
@@ -106,11 +82,6 @@ const Navigator = (props) => {
                     </Link>;
                 })}
             </WRow>
-            {/* {
-                canGoPrev ? <Link to={"/viewer/" + prevSibling} style={{ textDecoration: 'none', color: 'white', fontSize: '25px' }}>
-                    <i class="fas fa-arrow-left"></i>
-                </Link> : <div style={{ color: "grey" }}><i class="fas fa-arrow-left"></i></div>
-            } */}
             <Link to={"/viewer/" + prevSibling} style={{ textDecoration: 'none', color: 'white', fontSize: '25px' }}>
                 <i class="fas fa-arrow-left"></i>
             </Link>
